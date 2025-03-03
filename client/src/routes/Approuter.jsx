@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom"; 
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Adminlogin from "../Pages/admin/Adminlogin";
 import Dashboard from "../Pages/admin/Admindashboard";
@@ -17,3 +17,4 @@ export default function Approuter() {
     </Routes>
   );
 }
+

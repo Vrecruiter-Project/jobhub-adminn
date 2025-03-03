@@ -3,7 +3,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const protect = (req, res, next) => {
-  const token = req.cookies.jwt; // Get token from HTTP-only cookie
+  const token = req.cookies.token; // Match the cookie name from login controller
+  // Get token from HTTP-only cookie
 
   if (!token) {
     return res.status(401).json({ message: "Not authorized, no token" });

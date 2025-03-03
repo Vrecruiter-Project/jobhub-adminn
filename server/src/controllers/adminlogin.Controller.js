@@ -20,16 +20,17 @@ const adminController = asyncHandler(async (req, res) => {
   }
 
   // Generate JWT Token
-  const token = jwt.sign({ username }, "ayush", {
+  const token = jwt.sign({ username }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
 
   // Set HTTP-only cookie (more secure than localStorage)
   res.cookie("token", token, {
-    httpOnly: true, // Prevents client-side access
-    secure: process.env.NODE_ENV === "production", // Secure in production
-    sameSite: "None", // "None" if frontend and backend have different domains
+    httpOnly: true, // Prevents XSS
+    secure: true, // Ensures cookies only over HTTPS
+    sameSite: "Strict", // Prevent CSRF issues
   });
+  
 
   res.status(200).json({ message: "Login successful!" });
 });
