@@ -4,14 +4,13 @@ dotenv.config();
 
 const protect = (req, res, next) => {
   const token = req.cookies.token; // Match the cookie name from login controller
-  // Get token from HTTP-only cookie
 
   if (!token) {
     return res.status(401).json({ message: "Not authorized, no token" });
   }
 
   try {
-    const decoded = jwt.verify(token,"ayush"); 
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Use the correct secret key
     req.admin = decoded; // Store admin data in request
     next();
   } catch (error) {
