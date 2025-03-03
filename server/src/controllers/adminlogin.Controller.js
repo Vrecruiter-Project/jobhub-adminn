@@ -23,12 +23,13 @@ const adminController = asyncHandler(async (req, res) => {
   });
 
   // Set HTTP-only cookie (more secure than localStorage)
-  res.cookie("jwt", token, {
-    httpOnly: true,
-    // secure: process.env.NODE_ENV === "production", // Secure only in production
-    sameSite: "strict",
-    maxAge: 3600000, // 1 hour
+  res.cookie("token", token, {
+    httpOnly: true, // Prevents client-side access
+    //secure: process.env.NODE_ENV === "production", // Secure in production
+  secure: false,
+    sameSite: "Lax", // "None" if frontend and backend have different domains
   });
+  
 
   res.status(200).json({ message: "Login successful!" });
 });

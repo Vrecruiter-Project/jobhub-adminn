@@ -13,11 +13,11 @@ const ProtectedRoute = () => {
           method: "GET",
           credentials: "include",
         });
-    
-        const data = await res.json(); // Get the response body
-    
+
+        const data = await res.json(); 
+
         console.log("Auth Check Response:", res.status, data);
-    
+
         setAuth(res.ok);
       } catch (error) {
         console.error("Error checking auth:", error);
@@ -25,7 +25,7 @@ const ProtectedRoute = () => {
         setLoading(false);
       }
     };
-    
+
     checkAuth();
   }, []);
 
