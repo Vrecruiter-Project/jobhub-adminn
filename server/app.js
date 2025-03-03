@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://jobhub-adminn.vercel.app/"],
+    origin: ["https://jobhubadmin.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
