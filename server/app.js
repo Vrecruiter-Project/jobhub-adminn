@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const app = express();
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 //middleware
 app.use(bodyParser.json());
 app.use(express.json());
