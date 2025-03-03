@@ -28,7 +28,7 @@ const adminController = asyncHandler(async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true, // Prevents XSS
     secure: true, // Ensures cookies only over HTTPS
-    sameSite: "Strict", // Prevent CSRF issues
+    sameSite: "None", // Prevent CSRF issues
   });
   
 

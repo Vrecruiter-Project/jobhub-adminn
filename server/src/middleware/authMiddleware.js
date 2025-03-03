@@ -8,7 +8,6 @@ const protect = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: "Not authorized, no token" });
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Use the correct secret key
     req.admin = decoded; // Store admin data in request

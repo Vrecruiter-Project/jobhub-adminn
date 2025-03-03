@@ -6,21 +6,19 @@ const app = express();
 
 const dotenv = require("dotenv");
 dotenv.config();
-
+app.use(cookieParser());
 //middleware
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace with actual frontend URL
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
     credentials: true, // Allow cookies
   })
 );
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
-app.use(cookieParser());
 
 //routes
 
