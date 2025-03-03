@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
   useEffect(() => {
     const checkAuth = async () => {
       const res = await fetch("https://jobhub-admin.onrender.com/api/admin/dashboard", {
-        credentials: "include", // Send cookies
+        credentials: "include", 
       });
       setAuth(res.ok);
       setLoading(false);
