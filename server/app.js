@@ -9,12 +9,13 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: "*", // Allows requests from any origin
+    origin: "http://localhost:5173", // Allow only your frontend
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    credentials: true, // Important for cookies/session authentication
   })
 );
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
