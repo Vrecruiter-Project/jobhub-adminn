@@ -25,7 +25,7 @@ const adminController = asyncHandler(async (req, res) => {
   // Set HTTP-only cookie (more secure than localStorage)
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Secure only in production
+    //secure: process.env.NODE_ENV === "production", // Secure only in production
     sameSite: "strict",
     maxAge: 3600000, // 1 hour
   });

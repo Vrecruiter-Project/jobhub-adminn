@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Container, TextField, Button, Typography, Box, Paper } from "@mui/material";
+import { BASE_URL } from "../../api/api";
 
 const Adminlogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await fetch("https://jobhub-admin.onrender.com/api/admin/login", {
+    const res = await fetch(`${BASE_URL}/api/admin/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include", // Allow cookies
+      credentials: "include", 
       body: JSON.stringify({ username, password }),
     });
 

@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const protect = (req, res, next) => {
   const token = req.cookies.jwt; // Get token from HTTP-only cookie

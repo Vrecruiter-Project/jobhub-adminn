@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BASE_URL } from "../../api/api";
 // import {
 //   Container,
 //   Grid,
@@ -19,7 +20,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("https://jobhub-admin.onrender.com/api/admin/logout", { method: "POST", credentials: "include" });
+      await fetch(`${BASE_URL}/api/admin/logout`, { method: "POST", credentials: "include" });
       window.location.href = "/";
     } catch (error) {
       console.error("Logout failed:", error);

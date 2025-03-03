@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { BASE_URL } from "../api/api";
 
 const ProtectedRoute = () => {
   const [auth, setAuth] = useState(false);
@@ -7,8 +8,8 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const res = await fetch("https://jobhub-admin.onrender.com/api/admin/dashboard", {
-        credentials: "include", 
+      const res = await fetch(`${BASE_URL}/api/admin/dashboard`, {
+        credentials: "include",
       });
       setAuth(res.ok);
       setLoading(false);
