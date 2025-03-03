@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173/", // Replace with actual frontend URL
+    origin: "http://localhost:5173", // Replace with actual frontend URL
     credentials: true, // Allow cookies
   })
 );
