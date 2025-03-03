@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 
-const adminUsername = "admin";
-const adminPassword = "ayush123"; // Change this
+const adminUsername = "Manjeet";
+const adminPassword = "Saharan@94"; // Change this
 
 // Hash password before exporting
 const hashedPassword = bcrypt.hashSync(adminPassword, 10);
