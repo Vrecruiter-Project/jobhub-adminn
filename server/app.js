@@ -7,13 +7,7 @@ const app = express();
 //middleware
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(
-  cors({
-    origin: ["https://jobhubadmin.vercel.app/"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
