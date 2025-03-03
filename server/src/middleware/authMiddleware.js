@@ -10,7 +10,7 @@ const protect = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token,"ayush"); 
     req.admin = decoded; // Store admin data in request
     next();
   } catch (error) {
