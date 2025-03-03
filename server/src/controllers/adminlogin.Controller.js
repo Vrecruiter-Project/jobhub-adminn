@@ -25,12 +25,12 @@ const adminController = asyncHandler(async (req, res) => {
   });
 
   // Set HTTP-only cookie (more secure than localStorage)
+
   res.cookie("token", token, {
     httpOnly: true, // Prevents XSS
     secure: true, // Ensures cookies only over HTTPS
     sameSite: "None", // Prevent CSRF issues
   });
-  
 
   res.status(200).json({ message: "Login successful!" });
 });
