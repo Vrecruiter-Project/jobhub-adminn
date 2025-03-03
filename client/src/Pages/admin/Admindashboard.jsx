@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:3000/api/admin/logout", { method: "POST", credentials: "include" });
+      await fetch("https://jobhub-admin.onrender.com/api/admin/logout", { method: "POST", credentials: "include" });
       window.location.href = "/";
     } catch (error) {
       console.error("Logout failed:", error);
