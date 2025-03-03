@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const adminCredentials = require("../utils/adminCredentials");
 const asyncHandler = require("../utils/asyncHandler");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const adminController = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
