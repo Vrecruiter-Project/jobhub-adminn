@@ -8,12 +8,24 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const res = await fetch(`${BASE_URL}/api/admin/dashboard`, {
-        credentials: "include",
-      });
-      setAuth(res.ok);
-      setLoading(false);
+      try {
+        const res = await fetch(`${BASE_URL}/api/admin/dashboard`, {
+          method: "GET",
+          credentials: "include",
+        });
+    
+        const data = await res.json(); // Get the response body
+    
+        console.log("Auth Check Response:", res.status, data);
+    
+        setAuth(res.ok);
+      } catch (error) {
+        console.error("Error checking auth:", error);
+      } finally {
+        setLoading(false);
+      }
     };
+    
 
     checkAuth();
   }, []);
