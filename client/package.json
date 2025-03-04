@@ -16,7 +16,6 @@
     "@mui/material": "^6.4.5",
     "@tailwindcss/vite": "^4.0.8",
     "axios": "^1.7.9",
-    "i": "^0.3.7",
     "npm": "^11.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
