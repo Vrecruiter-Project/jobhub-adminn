@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Adminlogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -28,7 +28,7 @@ const Adminlogin = () => {
         alert(data.message);
       }
     } catch (error) {
-      alert("An error occurred. Please try again.");
+      alert("An error occurred. Please try againnnnnnnn.");
     } finally {
       setLoading(false);
     }
