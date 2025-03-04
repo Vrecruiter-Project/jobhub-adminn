@@ -1,6 +1,6 @@
-import React from "react";
-import { BASE_URL } from "../../api/api";
 
+import { BASE_URL } from "../../api/api";
+import DashboardLayoutBasic from "./component/sidebar";
 const Dashboard = () => {
 
   const handleLogout = async () => {
@@ -14,7 +14,35 @@ const Dashboard = () => {
 
   return (
     <>
-      Hello i am dashboard <br />
+
+<DashboardLayoutBasic />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" onClick={handleLogout}>Logout</button>
     </>
   )
