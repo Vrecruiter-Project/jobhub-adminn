@@ -7,8 +7,8 @@ const Dashboard = () => {
     try {
       await fetch(`${BASE_URL}/api/admin/logout`, { method: "POST", credentials: "include" });
       window.location.href = "/";
-    } catch (error) {
-      console.error("Logout failed:", error);
+    } catch (error)  {
+      console.error("Logout failed ohh:", error);
     }
   };
 
