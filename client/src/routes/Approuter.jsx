@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import Adminlogin from "../Pages/admin/Adminlogin";
-import Dashboard from "../Pages/admin/Admindashboard";
+import Adminlogin from "../Pages/Login/Adminlogin";
+import Dashboard from "../Pages/Dashboard/Admindashboard";
 import ProtectedRoute from "./ProtectedRoute";
 
 export default function Approuter() {
