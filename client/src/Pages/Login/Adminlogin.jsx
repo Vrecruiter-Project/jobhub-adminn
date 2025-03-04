@@ -28,7 +28,7 @@ const Adminlogin = () => {
         alert(data.message);
       }
     } catch (error) {
-      alert("An error occurred. Please try againnnnnnnn.");
+      alert("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
