@@ -36,7 +36,6 @@ const Adminlogin = () => {
   };
 
   return (
-
     <div style={{
       backgroundImage: `url(${bg})`,
       backgroundSize: "cover",
@@ -44,7 +43,6 @@ const Adminlogin = () => {
       height: "100vh",
       display: "flex",
       justifyContent: "center",
-
     }} className=" rounded-lg py-2">
       <div className="container flex flex-col mx-auto bg-grey-200 rounded-lg  my-2 ">
         <div className="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5">
