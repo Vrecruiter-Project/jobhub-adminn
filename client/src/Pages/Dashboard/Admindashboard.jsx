@@ -1,20 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BASE_URL } from "../../api/api";
-// import {
-//   Container,
-//   Grid,
-//   Paper,
-//   Button,
-//   Typography,
-//   Dialog,
-//   DialogTitle,
-//   DialogContent,
-//   DialogActions,
-//   Box,
-//   IconButton,
-// } from "@mui/material";
-// import { Close, CloudUpload } from "@mui/icons-material";
-// import axios from "axios";
 
 const Dashboard = () => {
 
