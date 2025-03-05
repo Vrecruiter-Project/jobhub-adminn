@@ -7,8 +7,8 @@ function DashboardPage() {
     <>
       <div style={{ width: '100%', height: 'auto', padding: '20px' }}>
         <Details />
-        <div style={{ display: 'flex', justifyContent: 'center', }}>
-          <div style={{ width: '50%', height: 'auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop:'40px'}}>
+          <div style={{ width: '100%', height: '60vh' }}>
             <BarChart />
           </div>
           {/* <div style={{ width: '50%', height: 'auto' }}>
