@@ -1,6 +1,5 @@
 import React from "react";
 import { BASE_URL } from "../../api/api";
-import DashboardLayoutBasic from "./components/Dashboardlayout";
 
 const Dashboard = () => {
 
@@ -15,7 +14,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <DashboardLayoutBasic />
 
     </>
   )
