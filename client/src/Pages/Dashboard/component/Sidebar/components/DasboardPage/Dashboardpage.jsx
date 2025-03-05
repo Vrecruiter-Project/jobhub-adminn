@@ -1,5 +1,3 @@
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Details from './components/ViewDetials';
 import BarChart from '../../../Graph/Barcharts';
 import Linechart from '../../../Graph/Linecharts';
