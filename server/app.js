@@ -38,4 +38,5 @@ app.use(express.static("public"));
 const adminRoute = require("./src/routes/admin.route");
 app.use("/api/admin", adminRoute);
 
+
 module.exports = app;
