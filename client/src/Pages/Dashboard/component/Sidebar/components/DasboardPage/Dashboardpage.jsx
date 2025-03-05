@@ -1,6 +1,6 @@
 import Details from './components/ViewDetials';
 import BarChart from '../../../Graph/Barcharts';
-import Linechart from '../../../Graph/Linecharts';
+//import Linechart from '../../../Graph/Linecharts';
 
 function DashboardPage() {
   return (
@@ -11,9 +11,9 @@ function DashboardPage() {
           <div style={{ width: '50%', height: 'auto' }}>
             <BarChart />
           </div>
-          <div style={{ width: '50%', height: 'auto' }}>
+          {/* <div style={{ width: '50%', height: 'auto' }}>
             <Linechart />
-          </div>
+          </div> */}
         </div>
       </div>
 
