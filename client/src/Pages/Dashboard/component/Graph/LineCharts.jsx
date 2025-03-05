@@ -41,6 +41,9 @@ const Linechart = () => {
             },
         },
     }
+
+
+    
     return (
         <>
             <Line

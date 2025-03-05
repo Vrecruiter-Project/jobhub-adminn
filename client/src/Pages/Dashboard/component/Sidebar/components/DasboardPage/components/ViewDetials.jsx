@@ -1,5 +1,4 @@
 import {  Typography } from '@mui/material';
-// import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const Details = () => {
