@@ -1,6 +1,8 @@
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import Details from './viewDetials';
+
+import Grap from './lineCharts';
+
 // Register necessary Chart.js components and plugins
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -53,22 +55,12 @@ const BarChart = () => {
                 },
             },
         },
-    }
+    };
 
     return (
-        <div style={{ width: '100%', height: '500px' }}> {/* Set the height and width to make it bigger */}
-            <Details />
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
-                <div style={{ width: '48%' , height:"500px"}}>
-                <Bar data={data} options={options} />
-                </div>
-                <div style={{ width: '48%',height:"500px" }}>
-                <Bar data={data} options={options} />
-                </div>
-            </div>
 
-            
-        </div>
+        <Bar data={data} options={options} />
+
     );
 };
 
