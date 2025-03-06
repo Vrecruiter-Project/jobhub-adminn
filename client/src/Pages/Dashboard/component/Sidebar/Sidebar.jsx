@@ -90,6 +90,24 @@ const demoTheme = createTheme({
   cssVariables: { colorSchemeSelector: 'data-toolpad-color-scheme' },
   colorSchemes: { light: true, dark: true },
   breakpoints: { values: { xs: 0, sm: 600, md: 600, lg: 1200, xl: 1536 } },
+  palette: {
+    primary: {
+      main: '#4CAF50', // Green color
+      contrastText: '#ffffff', // White text for better contrast
+    },
+    secondary: {
+      main: '#8BC34A', // Light green color
+      contrastText: '#ffffff', // White text for better contrast
+    },
+    background: {
+      default: '#E8F5E9', // Light green background
+      paper: '#C8E6C9', // Slightly darker green for paper elements
+    },
+    text: {
+      primary: '#1B5E20', // Dark green text
+      secondary: '#2E7D32', // Slightly lighter green text
+    },
+  },
 });
 
 function AppProviderBasic() {
@@ -113,20 +131,20 @@ function AppProviderBasic() {
 
   return (
     <>
-    <AppProvider 
-      navigation={NAVIGATION}
-      router={router}
-      theme={demoTheme}
-      branding={{ 
-        title: <Typography className="text-2xl">JOB HUB <sup>admin</sup></Typography>,
-        logo: <img className='logo' src={Logo} alt="job-hub" />,
-      }}
+      <AppProvider 
+        navigation={NAVIGATION}
+        router={router}
+        theme={demoTheme}
+        branding={{ 
+          title: <Typography className="text-2xl">JOB HUB <sup>admin</sup></Typography>,
+          logo: <img className='logo' src={Logo} alt="job-hub" />,
+        }}
       >
-      <DashboardLayout>
-        {renderPage()}
-      </DashboardLayout>
-    </AppProvider>
-      </>
+        <DashboardLayout>
+          {renderPage()}
+        </DashboardLayout>
+      </AppProvider>
+    </>
   )
 };
 

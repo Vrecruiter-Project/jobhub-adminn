@@ -17,6 +17,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    textTransform:'capitalize',
     padding: '12px',
     color: theme.palette.text.primary,
   },
@@ -98,7 +99,7 @@ const CompanyData = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(userInfo?.length === 0) ? (<ShimmerEffect />) : userInfo.map((user, index) => (
+          {(userInfo?.length === 0) ? (<ShimmerEffect effect={7} />) : userInfo.map((user, index) => (
             <User 
               key={index}
               {...user}

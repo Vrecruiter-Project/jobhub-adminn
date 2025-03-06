@@ -1,6 +1,8 @@
 import {  Typography } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+
 const Details = () => {
     return (
         <div
@@ -20,23 +22,24 @@ const Details = () => {
                         width: '30%',
                         minWidth: '250px',
                         textAlign: 'left',
-                        backgroundColor: '#0274db',
+                        backgroundColor: '#53ed46',
                         padding: '20px',
                         borderRadius: '8px',
                         flex: '1 1 250px', // Flex grow, shrink, and base width
                         margin: '10px', // Add margin for spacing
                     }}
                 >
-                    <Typography variant="h6" style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', color: 'white' }}>
+                    <Typography variant="h6" style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', color: 'white' ,textShadow:'2px 2px 4px #000000' }}>
                         {item}
                         <div className='flex'>
                             <span className='text-5xl'>+94</span>
-                            <TrendingUpIcon style={{ color: '#3dfa05', fontSize: '50px' }} />
+                            <TrendingUpIcon style={{ color: '#0017ff', fontSize: '50px' }} />
                         </div>
                     </Typography>
-                    <Typography className='text-blue-300 flex items-center justify-between cursor-pointer'>
+                            <div className='text-right mr-14 text-red-400'>-4</div>
+                    <Typography className='text-white flex items-center justify-between cursor-pointer p-1 bg-green-500 rounded-sm'>
                         View Detail
-                        <ArrowForwardIosIcon style={{ fontSize: '15px' }} />
+                        <ArrowForwardIosIcon style={{ fontSize: '15px'  }} />
                     </Typography>
                 </div>
             ))}

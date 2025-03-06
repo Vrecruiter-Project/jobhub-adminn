@@ -1,4 +1,3 @@
-import React from "react";
 import { BASE_URL } from "../../api/api";
 import AppProviderBasic from "./component/Sidebar/Sidebar";
 

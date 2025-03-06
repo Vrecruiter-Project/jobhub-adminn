@@ -6,18 +6,18 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const BarChart = () => {
     // Updated data for the bar chart: weeks and male/female data
     const data = {
-        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         datasets: [
             {
-                label: 'Male',
-                data: [120, 150, 130, 170, 200],
+                label: 'Enrolled',
+                data: [120, 150, 130, 170, 200, 120],
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             },
             {
-                label: 'Female',
-                data: [100, 130, 110, 160, 190],
+                label: 'UnEnrolled',
+                data: [100, 130, 110, 160, 190, 12],
                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
                 borderColor: 'rgba(153, 102, 255, 1)',
                 borderWidth: 1,
@@ -41,7 +41,6 @@ const BarChart = () => {
             tooltip: {
                 enabled: true,
             },
-          
         },
     };
 
@@ -49,7 +48,7 @@ const BarChart = () => {
 
         <Bar data={data} options={options} />
 
-    );
+    )
 };
 
 export default BarChart;

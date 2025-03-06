@@ -1,12 +1,12 @@
 import './Shimmer.css';
 import { TableRow, TableCell } from '@mui/material';
 
-const ShimmerEffect = () => {
+const ShimmerEffect = ({ effect }) => {  // Destructure effect here
     return (
         <>
             {Array(12).fill('').map((_, key) => (
                 <TableRow key={key}>
-                    {Array(7).fill('').map((_, cellKey) => (
+                    {Array(effect).fill('').map((_, cellKey) => (
                         <TableCell key={cellKey}>
                             <div className="shimmer-item"></div>
                         </TableCell>
