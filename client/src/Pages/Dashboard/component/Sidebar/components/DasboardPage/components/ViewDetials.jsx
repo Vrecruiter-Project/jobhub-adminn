@@ -36,8 +36,8 @@ const Details = () => {
                             <TrendingUpIcon style={{ color: '#0017ff', fontSize: '50px' }} />
                         </div>
                     </Typography>
-                            <div className='text-right mr-14 text-red-400'>-4</div>
-                    <Typography className='text-white flex items-center justify-between cursor-pointer p-1 bg-green-500 rounded-sm'>
+                            {/* <div className='text-right mr-14 text-red-400'>-4</div> */}
+                    <Typography sx={{marginTop:'10px'}} className='text-white flex items-center justify-between cursor-pointer p-4  bg-green-500 rounded-sm'>
                         View Detail
                         <ArrowForwardIosIcon style={{ fontSize: '15px'  }} />
                     </Typography>
