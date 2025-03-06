@@ -62,8 +62,6 @@
 
 // export default AppProviderBasic;
 import { createTheme } from '@mui/material/styles';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
@@ -114,20 +112,22 @@ function AppProviderBasic() {
   };
 
   return (
-    <AppProvider
+    <>
+    <AppProvider 
       navigation={NAVIGATION}
       router={router}
       theme={demoTheme}
-      branding={{
-        title: <Typography className="text-2xl">Job Hub <sup>admin</sup></Typography>,
-        logo: <img src={Logo} alt="job-hub" />,
+      branding={{ 
+        title: <Typography className="text-2xl">JOB HUB <sup>admin</sup></Typography>,
+        logo: <img className='logo' src={Logo} alt="job-hub" />,
       }}
-    >
+      >
       <DashboardLayout>
         {renderPage()}
       </DashboardLayout>
     </AppProvider>
-  );
-}
+      </>
+  )
+};
 
 export default AppProviderBasic;

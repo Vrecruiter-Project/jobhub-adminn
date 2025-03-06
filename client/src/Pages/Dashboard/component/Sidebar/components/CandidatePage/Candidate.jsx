@@ -1,6 +1,10 @@
 import  { useState, useEffect } from "react";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types"; 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, styled, tableCellClasses } from "@mui/material";
+// import { CANDITATE_BASE_URL } from "../../../../../../api/api";
+import { JOBHUB_BASE_URL } from "../../../../../../api/api";
+import ShimmerEffect from "../../../../../../../utils/Shimmer";
+import useOnline from "../../../../../../../utils/useOnline";
 
 // StyledTableCell for custom cell styles (with custom header and body styles)
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -35,13 +39,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const User = ({ fullname, email, position, dob, number, gender, address }) => {
   return (
     <StyledTableRow>
-      <StyledTableCell>{fullname}</StyledTableCell>
-      <StyledTableCell>{email}</StyledTableCell>
-      <StyledTableCell>{position}</StyledTableCell>
-      <StyledTableCell>{dob}</StyledTableCell>
-      <StyledTableCell>{number}</StyledTableCell>
-      <StyledTableCell>{gender}</StyledTableCell>
-      <StyledTableCell>{address}</StyledTableCell>
+      <StyledTableCell sx={{textAlign:'center'}}>{fullname}</StyledTableCell>
+      <StyledTableCell  sx={{textAlign:'center'}}>{email}</StyledTableCell>
+      <StyledTableCell  sx={{textAlign:'center'}}>{position}</StyledTableCell>
+      <StyledTableCell  sx={{textAlign:'center'}}>{dob}</StyledTableCell>
+      <StyledTableCell  sx={{textAlign:'center'}}>{number}</StyledTableCell>
+      <StyledTableCell  sx={{textAlign:'center'}}>{gender}</StyledTableCell>
+      <StyledTableCell  sx={{textAlign:'center'}}>{address}</StyledTableCell>
     </StyledTableRow>
   );
 };
@@ -61,17 +65,26 @@ const CompanyData = () => {
   const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
+    async function getUserInfo() {
+      const data = await fetch(`${JOBHUB_BASE_URL}/candidates/getcandidates`);
+      const json = await data.json();
+      setUserInfo(json);
+    }
     getUserInfo();
   }, []);
 
-  async function getUserInfo() {
-    const data = await fetch('https://jobhub-project-official-1.onrender.com/api/candidates/getcandidates');
-    const json = await data.json();
-    setUserInfo(json);
+  // offline state 
+  const off = useOnline();
+  if (!off) {
+    return (
+        <>
+          <h1>You are Offline please help to connect the internet !!</h1>
+        </>
+      )
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{ width: '100%' }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead style={{ position: 'sticky', top: 0, zIndex: 1 }}>
           <TableRow>
@@ -85,16 +98,10 @@ const CompanyData = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {userInfo.map((user, index) => (
-            <User
+          {(userInfo?.length === 0) ? (<ShimmerEffect />) : userInfo.map((user, index) => (
+            <User 
               key={index}
-              fullname={user.fullname}
-              email={user.email}
-              position={user.position}
-              dob={user.dob}
-              number={user.number}
-              gender={user.gender}
-              address={user.address}
+              {...user}
             />
           ))}
         </TableBody>
