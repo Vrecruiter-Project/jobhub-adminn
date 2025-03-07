@@ -1,49 +1,74 @@
-import {  Typography } from '@mui/material';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
+import HailIcon from '@mui/icons-material/Hail'; // for candidates
+import WorkTwoToneIcon from '@mui/icons-material/WorkTwoTone'; // for jobs
+import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone'; // for company
+import ArrowForwardTwoToneIcon from '@mui/icons-material/ArrowForwardTwoTone';
+import HowToRegTwoToneIcon from '@mui/icons-material/HowToRegTwoTone';
+import AddCircleOutlineTwoToneIcon from '@mui/icons-material/AddCircleOutlineTwoTone';
 
 const Details = () => {
     return (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'flex-start',
-                flexDirection: 'row',
-                gap: '20px',
-                flexWrap: 'wrap', // Allow wrapping for smaller screens
-            }}
-        >
-            {['Candidates', 'Job Openings', 'Companies'].map((item, index) => (
-                <div
-                    key={index}
-                    style={{
-                        width: '30%',
-                        minWidth: '250px',
-                        textAlign: 'left',
-                        backgroundColor: '#53ed46',
-                        padding: '20px',
-                        borderRadius: '8px',
-                        flex: '1 1 250px', // Flex grow, shrink, and base width
-                        margin: '10px', // Add margin for spacing
-                    }}
-                >
-                    <Typography variant="h6" style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', color: 'white' ,textShadow:'2px 2px 4px #000000' }}>
-                        {item}
-                        <div className='flex'>
-                            <span className='text-5xl'>+94</span>
-                            <TrendingUpIcon style={{ color: '#0017ff', fontSize: '50px' }} />
+        <>
+            <div className='flex flex-wrap justify-center items-center gap-6 p-4'>
+                {/* Company Card */}
+                <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
+                    <div className='text-4xl'>
+                        <div className='flex w-20 justify-between items-center p-1 text-4xl gap-1.5 mb-1.5'>
+                            <BusinessTwoToneIcon style={{ fontSize: '2rem' }} />
+                            +94
                         </div>
-                    </Typography>
-                            {/* <div className='text-right mr-14 text-red-400'>-4</div> */}
-                    <Typography sx={{marginTop:'10px'}} className='text-white flex items-center justify-between cursor-pointer p-4  bg-green-500 rounded-sm'>
-                        View Detail
-                        <ArrowForwardIosIcon style={{ fontSize: '15px'  }} />
-                    </Typography>
+                        Company
+                    </div>
+                    <div style={{ backgroundColor: '#bcfd49' }} className='p-1 flex items-center justify-between rounded-2xl px-5 mt-1'>
+                        View Details
+                        <ArrowForwardTwoToneIcon />
+                    </div>
                 </div>
-            ))}
-        </div>
+
+                {/* Jobs Card */}
+                <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
+                    <div className='text-4xl'>
+                        <div className='flex w-20 justify-between items-center p-1 text-4xl gap-1.5 mb-1.5'>
+                            <WorkTwoToneIcon style={{ fontSize: '2rem' }} />
+                            +94
+                        </div>
+                        Jobs
+                    </div>
+                    <div style={{ backgroundColor: '#bcfd49' }} className='p-1 flex items-center justify-between rounded-2xl px-5 mt-1'>
+                        View Details
+                        <ArrowForwardTwoToneIcon />
+                    </div>
+                </div>
+
+                {/* Candidates Card */}
+                <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
+                    <div className='text-4xl'>
+                        <div className='flex w-20 justify-between items-center p-1 text-4xl gap-1.5 mb-1.5'>
+                            <HailIcon style={{ fontSize: '2rem' }} />
+                            +94
+                        </div>
+                        Candidates
+                    </div>
+                    <div style={{ backgroundColor: '#bcfd49' }} className='p-1 flex items-center justify-between rounded-2xl px-5 mt-1'>
+                        View Details
+                        <ArrowForwardTwoToneIcon />
+                    </div>
+                </div>
+
+                {/* Add Candidate Card */}
+                <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
+                    <div className='text-4xl'>
+                        <div className='flex justify-center items-center p-1 text-4xl gap-1.5 mb-1.5'>
+                            <HowToRegTwoToneIcon style={{ fontSize: '5rem' }} />
+                        </div>
+                    </div>
+                    <div style={{ backgroundColor: '#7483bd' }} className='p-1 flex items-center justify-center gap-3.5 rounded-2xl px-5 mt-1'>
+                        Add Candidate
+                        <AddCircleOutlineTwoToneIcon />
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
+
 export default Details;
