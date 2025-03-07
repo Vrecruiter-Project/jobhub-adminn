@@ -40,7 +40,7 @@ const Details = () => {
                 </div>
 
                 {/* Candidates Card */}
-                <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
+                {/* <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
                     <div className='text-4xl'>
                         <div className='flex w-20 justify-between items-center p-1 text-4xl gap-1.5 mb-1.5'>
                             <HailIcon style={{ fontSize: '2rem' }} />
@@ -52,9 +52,20 @@ const Details = () => {
                         View Details
                         <ArrowForwardTwoToneIcon />
                     </div>
-                </div>
+                </div> */}
 
                 {/* Add Candidate Card */}
+                <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
+                    <div className='text-4xl'>
+                        <div className='flex justify-center items-center p-1 text-4xl gap-1.5 mb-1.5'>
+                            <HowToRegTwoToneIcon style={{ fontSize: '5rem' }} />
+                        </div>
+                    </div>
+                    <div style={{ backgroundColor: '#7483bd' }} className='p-1 flex items-center justify-center gap-3.5 rounded-2xl px-5 mt-1'>
+                        Add Job
+                        <AddCircleOutlineTwoToneIcon />
+                    </div>
+                </div>
                 <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
                     <div className='text-4xl'>
                         <div className='flex justify-center items-center p-1 text-4xl gap-1.5 mb-1.5'>
