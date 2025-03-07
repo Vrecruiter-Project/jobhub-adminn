@@ -142,7 +142,7 @@ function AppProviderBasic() {
 
   // Update NAVIGATION with active icon styling and onClick handler for logout
   const navigationWithActiveIcons = NAVIGATION.map((item) => {
-    if (item.segment === 'logout' && item.title === 'Exit') {
+    if (item.segment === 'logout' && item.title === 'Logout') {
       return {
         ...item,
         icon: React.cloneElement(item.icon, {
