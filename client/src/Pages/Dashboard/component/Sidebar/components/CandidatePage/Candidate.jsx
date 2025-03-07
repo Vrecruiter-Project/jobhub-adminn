@@ -1,58 +1,66 @@
-import  { useState, useEffect } from "react";
-import PropTypes from "prop-types"; 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, styled, tableCellClasses } from "@mui/material";
-// import { CANDITATE_BASE_URL } from "../../../../../../api/api";
+import { useState, useEffect, useMemo } from "react";
+import PropTypes from "prop-types";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+  TextField,
+  styled,
+  tableCellClasses,
+  CircularProgress,
+} from "@mui/material";
+import * as XLSX from "xlsx";
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
 import ShimmerEffect from "../../../../../../../utils/Shimmer";
 import useOnline from "../../../../../../../utils/useOnline";
+import Btn from "../../../Button/Btnn";
+import Search from "../../../Button/Search";
 
-// StyledTableCell for custom cell styles (with custom header and body styles)
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#8BC34A', // Light green color (you can use hex, RGB, or theme color)
+    backgroundColor: "#4CAF50",
     color: theme.palette.common.white,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    padding: '16px',
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    padding: "16px",
+    textAlign: "center",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    textTransform:'capitalize',
-    padding: '12px',
-    color: theme.palette.text.primary,
+    padding: "12px",
+    textAlign: "center",
   },
 }));
 
-// StyledTableRow for custom row styles with hover and alternating row color
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  '&:hover': {
+  "&:hover": {
     backgroundColor: theme.palette.action.selected,
-  },
-  '&:last-child td, &:last-child th': {
-    border: 0,
   },
 }));
 
-// User component with prop validation
-const User = ({ fullname, email, position, dob, number, gender, address }) => {
-  return (
-    <StyledTableRow>
-      <StyledTableCell sx={{textAlign:'center'}}>{fullname}</StyledTableCell>
-      <StyledTableCell  sx={{textAlign:'center'}}>{email}</StyledTableCell>
-      <StyledTableCell  sx={{textAlign:'center'}}>{position}</StyledTableCell>
-      <StyledTableCell  sx={{textAlign:'center'}}>{dob}</StyledTableCell>
-      <StyledTableCell  sx={{textAlign:'center'}}>{number}</StyledTableCell>
-      <StyledTableCell  sx={{textAlign:'center'}}>{gender}</StyledTableCell>
-      <StyledTableCell  sx={{textAlign:'center'}}>{address}</StyledTableCell>
-    </StyledTableRow>
-  );
-};
+const User = ({ count, fullname, email, position, dob, number, gender, address }) => (
+  <StyledTableRow>
+    <StyledTableCell>{count}</StyledTableCell>
+    <StyledTableCell>{fullname}</StyledTableCell>
+    <StyledTableCell>{email}</StyledTableCell>
+    <StyledTableCell>{position}</StyledTableCell>
+    <StyledTableCell>{dob}</StyledTableCell>
+    <StyledTableCell>{number}</StyledTableCell>
+    <StyledTableCell>{gender}</StyledTableCell>
+    <StyledTableCell>{address}</StyledTableCell>
+  </StyledTableRow>
+);
 
-// Prop validation for the User component
 User.propTypes = {
+  count: PropTypes.number.isRequired,
   fullname: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   position: PropTypes.string.isRequired,
@@ -62,53 +70,110 @@ User.propTypes = {
   address: PropTypes.string.isRequired,
 };
 
-const CompanyData = () => {
+const CandidateData = () => {
   const [userInfo, setUserInfo] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function getUserInfo() {
-      const data = await fetch(`${JOBHUB_BASE_URL}/candidates/getcandidates`);
-      const json = await data.json();
-      setUserInfo(json);
-    }
+    const getUserInfo = async () => {
+      try {
+        const response = await fetch(`${JOBHUB_BASE_URL}/candidates/getcandidates`);
+        if (!response.ok) throw new Error("Failed to fetch candidates");
+        const data = await response.json();
+        setUserInfo(data);
+      } catch (error) {
+        console.error(error);
+        alert("Failed to load data, please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
     getUserInfo();
   }, []);
 
-  // offline state 
   const off = useOnline();
-  if (!off) {
-    return (
-        <>
-          <h1>You are Offline please help to connect the internet !!</h1>
-        </>
+  if (!off) return <h1>You are Offline, please connect to the internet!</h1>;
+
+  const handleDownloadExcel = () => {
+    if (userInfo.length === 0) {
+      alert("No data available to download.");
+      return;
+    }
+    const data = userInfo.map((user, index) => ({
+      S_No: index + 1,
+      FullName: user.fullname,
+      Email: user.email,
+      Position: user.position,
+      DOB: user.dob,
+      PhoneNumber: user.number,
+      Gender: user.gender,
+      Address: user.address,
+    }));
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Candidates");
+    XLSX.writeFile(workbook, "CandidatesData.xlsx");
+  };
+
+  // Optimize filtering with useMemo
+  const filteredUsers = useMemo(() => {
+    return userInfo.filter((user) =>
+      Object.values(user).some((value) =>
+        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
-  }
+    );
+  }, [searchTerm, userInfo]);
 
   return (
-    <TableContainer component={Paper} style={{ width: '100%' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead style={{ position: 'sticky', top: 0, zIndex: 1 }}>
-          <TableRow>
-            <StyledTableCell>Full Name</StyledTableCell>
-            <StyledTableCell align="center">Email</StyledTableCell>
-            <StyledTableCell align="center">Position</StyledTableCell>
-            <StyledTableCell align="center">DOB</StyledTableCell>
-            <StyledTableCell align="center">Phone Number</StyledTableCell>
-            <StyledTableCell align="center">Gender</StyledTableCell>
-            <StyledTableCell align="center">Address</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(userInfo?.length === 0) ? (<ShimmerEffect effect={7} />) : userInfo.map((user, index) => (
-            <User 
-              key={index}
-              {...user}
-            />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div style={{ padding: "20px" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+        {/* <Search /> */}
+        <TextField
+          label="Search"
+          variant="outlined"
+          size="small"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          sx={{ width: "300px" }}
+        />
+        <Btn text="Download Excel" click={handleDownloadExcel} />
+      </Box>
+      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
+        <Table sx={{ minWidth: 700 }}>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>S_No</StyledTableCell>
+              <StyledTableCell>Full Name</StyledTableCell>
+              <StyledTableCell>Email</StyledTableCell>
+              <StyledTableCell>Position</StyledTableCell>
+              <StyledTableCell>DOB</StyledTableCell>
+              <StyledTableCell>Phone Number</StyledTableCell>
+              <StyledTableCell>Gender</StyledTableCell>
+              <StyledTableCell>Address</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={8} align="center">
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            ) : filteredUsers.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={8} align="center">
+                  <h3>No results found</h3>
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredUsers.map((user, index) => <User key={index} count={index + 1} {...user} />)
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 
-export default CompanyData;
+export default CandidateData;
