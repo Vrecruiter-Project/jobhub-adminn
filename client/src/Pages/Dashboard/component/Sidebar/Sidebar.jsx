@@ -88,7 +88,7 @@ const NAVIGATION = [
   { segment: 'company', title: 'COMPANY', icon: <BusinessIcon /> },
   { segment: 'jobs', title: 'JOBS', icon: <WorkIcon /> },
   { segment: 'candidate', title: 'CANDIDATE', icon: <HailIcon /> },
-  { segment: 'logout', title: 'Exit', icon: <LogoutIcon /> },
+  { segment: 'logout', title: 'Logout', icon: <LogoutIcon /> },
 ];
 
 // Theme Configuration
@@ -124,9 +124,9 @@ function AppProviderBasic() {
   // Logout function
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/admin/logout`, { 
-        method: "POST", 
-        credentials: "include" 
+      const response = await fetch(`${BASE_URL}/api/admin/logout`, {
+        method: "POST",
+        credentials: "include"
       });
 
       if (!response.ok) {
@@ -153,8 +153,8 @@ function AppProviderBasic() {
         }),
         // Make the title (Exit) also clickable
         title: (
-          <div 
-          style={{ padding:'10px'}}
+          <div
+            style={{ padding: '10px' }}
             onClick={() => handleLogout()}
           >
             {item.title}
@@ -176,11 +176,11 @@ function AppProviderBasic() {
   });
 
   return (
-    <AppProvider 
+    <AppProvider
       navigation={navigationWithActiveIcons}
       router={router}
       theme={demoTheme}
-      branding={{ 
+      branding={{
         title: <Typography className="text-2xl">JOB HUB <sup>admin</sup></Typography>,
         logo: <img className='logo' src={Logo} alt="job-hub" />,
       }}

@@ -125,7 +125,11 @@ const CompanyPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{ width: "300px" }}
         />
-        <Btn text="Download Excel" click={handleDownloadExcel} />
+       <Box sx={{ display: "flex", gap: "10px" }}>
+                 <Btn text="Add Data" click={handleDownloadExcel} />
+                 <Btn text="Download Excel" click={handleDownloadExcel} />
+       
+               </Box>
       </Box>
       <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
         <Table sx={{ minWidth: 700 }}>
