@@ -16,9 +16,9 @@ import {
 } from "@mui/material";
 import * as XLSX from "xlsx";
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
-// import ShimmerEffect from "../../../../../../../utils/Shimmer";
-import useOnline from "../../../../../../../utils/useOnline";
+
 import Btn from "../../../Button/Btnn";
+import { NotFound } from "../../../../../../../utils/Error";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,13 +45,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+// Utility function to capitalize first letter of each word
+const capitalizeWords = (str) => {
+  return str
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
 const Company = ({ count, companyName, numberOfPosition, jobLocation, benefits }) => (
   <StyledTableRow>
     <StyledTableCell>{count}</StyledTableCell>
-    <StyledTableCell>{companyName}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(companyName)}</StyledTableCell>
     <StyledTableCell>{numberOfPosition}</StyledTableCell>
-    <StyledTableCell>{jobLocation}</StyledTableCell>
-    <StyledTableCell>{benefits.join(", ")}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(jobLocation)}</StyledTableCell>
+    <StyledTableCell>{benefits.map(capitalizeWords).join(", ")}</StyledTableCell>
   </StyledTableRow>
 );
 
@@ -85,8 +93,6 @@ const CompanyPage = () => {
     getCompanyData();
   }, []);
 
-  const off = useOnline();
-  if (!off) return <h1>You are Offline, please connect to the internet!</h1>;
 
   const handleDownloadExcel = () => {
     if (jobList.length === 0) {
@@ -95,10 +101,10 @@ const CompanyPage = () => {
     }
     const data = jobList.map((job, index) => ({
       S_No: index + 1,
-      CompanyName: job.companyName,
+      CompanyName: capitalizeWords(job.companyName),
       NumberOfPositions: job.numberOfPosition,
-      Location: job.jobLocation,
-      Benefits: job.benefits.join(", "),
+      Location: capitalizeWords(job.jobLocation),
+      Benefits: job.benefits.map(capitalizeWords).join(", "),
     }));
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -152,7 +158,7 @@ const CompanyPage = () => {
             ) : filteredJobs.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={5} align="center">
-                  <h3>No results found</h3>
+                  <NotFound/>
                 </TableCell>
               </TableRow>
             ) : (

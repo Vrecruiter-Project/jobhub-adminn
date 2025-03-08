@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { BASE_URL } from "../api/api";
+import { DotsLoader } from "../../utils/DotsLoader";
 
 const ProtectedRoute = () => {
   const [auth, setAuth] = useState(null);
@@ -23,7 +24,7 @@ const ProtectedRoute = () => {
     checkAuth();
   }, []);
 
-  if (auth === null) return <div>Loading...</div>;
+  if (auth === null) return <DotsLoader/>;
   return auth ? <Outlet /> : <Navigate to="/" replace />;
 };
 
