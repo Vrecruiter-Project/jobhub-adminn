@@ -15,7 +15,7 @@ import { JOBHUB_BASE_URL } from "../../api/api";
 const registerCandidate = async (formData) => {
   try {
     const response = await axios.post(
-      `${JOBHUB_BASE_URL}/registercandidate`,
+      `${JOBHUB_BASE_URL}/candidates/registercandidate`,
       formData,
       {
         headers: { "Content-Type": "application/json" },
@@ -51,8 +51,7 @@ const RegistrationPage = ({ onSubmit }) => {
     e.preventDefault();
     try {
       await registerCandidate(formData);
-     alert("Registration Successful!");
-      onSubmit(); // Call the function passed as a prop to close the modal
+      alert("Registration Successful!");
     } catch (error) {
       alert(error.message || "Registration failed.");
     }
@@ -60,7 +59,7 @@ const RegistrationPage = ({ onSubmit }) => {
 
   return (
     <Box>
-      {/* <ToastContainer /> */}
+   
       <Box
         sx={{
           display: "flex",
@@ -74,7 +73,6 @@ const RegistrationPage = ({ onSubmit }) => {
           padding: "40px",
           width: "100%",
           maxWidth: "600px",
-          
         }}
       >
         <Typography sx={{ mb: 3 }} variant="h5" component="h1" gutterBottom fontWeight="bold" textAlign="center">

@@ -7,43 +7,29 @@ import Btn from '../Button/Btnn';
 
 const style = {
   position: 'absolute',
-   top: '30%',
+  top: '30%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  // width: 400,
   bgcolor: 'background.paper',
-  // border: '2px solid #000',
-  // boxShadow: 24,
-  // p: 4,
-  mt:'13rem',
-  borderRadius:'10px',
-  
-  maxHeight: '100px',
+  mt: '13rem',
+  borderRadius: '10px',
+  // maxHeight: '100px',
   scrollbarWidth: 'none',
-              overflowY: 'auto',
-               maxHeight: '100%',
+  overflowY: 'auto',
+  maxHeight: '100%',
 };
 
-export default function BasicModal({ form , text }) {
+export default function BasicModal({ form, text }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Btn text={text} click={handleOpen} />
-      
-      <Modal  sx={{
-            // position: 'absolute',
-            //   top: '50%',
-            //   left: '50%',
-              // transform: 'translate(-50%, -50%)',
-              // mt: 19,
-              // scrollbarWidth: 'none',
-              // overflowY: 'auto',
-                maxHeight: '70vh',
-              // border: 'none',
+
+      <Modal sx={{
+        maxHeight: '70vh',
       }}
         open={open}
         onClose={handleClose}
