@@ -74,12 +74,13 @@ import { useDemoRouter } from '@toolpad/core/internal';
 import Logo from '/logo.png';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { BASE_URL } from '../../../../api/api';
-
 // Import Demo Pages
 import DashboardPage from './components/DasboardPage/Dashboardpage';
 import CompanyPage from './components/CompanyPage/Companypage';
 import JobsPage from './components/JobsPage/Jobspage';
 import CandidatePage from './components/CandidatePage/Candidate';
+import useOnline from '../../../../../utils/useOnline';
+import { OffLine } from '../../../../../utils/Error';
 
 // Navigation Configuration
 const NAVIGATION = [
@@ -142,19 +143,15 @@ function AppProviderBasic() {
 
   // Update NAVIGATION with active icon styling and onClick handler for logout
   const navigationWithActiveIcons = NAVIGATION.map((item) => {
-    if (item.segment === 'logout' && item.title === 'Logout') {
+    if (item.segment === 'logout') {
       return {
         ...item,
         icon: React.cloneElement(item.icon, {
-          onClick: () => {
-            console.log("Logout icon clicked"); // Debugging if the icon is clicked
-            handleLogout(); // Trigger the logout function
-          },
+          onClick: () => handleLogout(), // Trigger the logout function
         }),
-        // Make the title (Exit) also clickable
         title: (
           <div
-            style={{ padding: '10px' }}
+            style={{ padding: '10px', cursor: 'pointer' }}
             onClick={() => handleLogout()}
           >
             {item.title}
@@ -175,6 +172,11 @@ function AppProviderBasic() {
     return item;
   });
 
+  const Off = useOnline();
+  if (!Off) {
+    return <OffLine />;
+  }
+
   return (
     <AppProvider
       navigation={navigationWithActiveIcons}
@@ -190,7 +192,6 @@ function AppProviderBasic() {
       </DashboardLayout>
     </AppProvider>
   );
-}
+};
 
 export default AppProviderBasic;
-

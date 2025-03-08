@@ -8,7 +8,8 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Box, InputAdornment,
+  Box,
+  InputAdornment,
   TextField,
   styled,
   tableCellClasses,
@@ -16,10 +17,18 @@ import {
 } from "@mui/material";
 import * as XLSX from "xlsx";
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
-import ShimmerEffect from "../../../../../../../utils/Shimmer";
 import useOnline from "../../../../../../../utils/useOnline";
 import Btn from "../../../Button/Btnn";
 import SearchIcon from "@mui/icons-material/Search";
+import { NotFound } from "../../../../../../../utils/Error";
+
+// Utility function to capitalize first letter of each word
+const capitalizeWords = (str) => {
+  return str
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -49,14 +58,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Job = ({ count, jobTitle, jobRole, numberOfPosition, companyName, jobLocation, experience, salary, english }) => (
   <StyledTableRow>
     <StyledTableCell>{count}</StyledTableCell>
-    <StyledTableCell>{jobTitle}</StyledTableCell>
-    <StyledTableCell>{jobRole}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(jobTitle)}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(jobRole)}</StyledTableCell>
     <StyledTableCell>{numberOfPosition}</StyledTableCell>
-    <StyledTableCell>{companyName}</StyledTableCell>
-    <StyledTableCell>{jobLocation}</StyledTableCell>
-    <StyledTableCell>{experience}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(companyName)}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(jobLocation)}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(experience)}</StyledTableCell>
     <StyledTableCell>{salary}</StyledTableCell>
-    <StyledTableCell>{english}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(english)}</StyledTableCell>
   </StyledTableRow>
 );
 
@@ -104,14 +113,14 @@ const JobsPage = () => {
     }
     const data = jobList.map((job, index) => ({
       S_No: index + 1,
-      Job_Title: job.jobTitle,
-      Job_Role: job.jobRole,
+      Job_Title: capitalizeWords(job.jobTitle),
+      Job_Role: capitalizeWords(job.jobRole),
       Positions: job.numberOfPosition,
-      Company: job.companyName,
-      Location: job.jobLocation,
-      Experience: job.experience,
+      Company: capitalizeWords(job.companyName),
+      Location: capitalizeWords(job.jobLocation),
+      Experience: capitalizeWords(job.experience),
       Salary: job.salary,
-      English: job.english,
+      English: capitalizeWords(job.english),
     }));
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -138,7 +147,7 @@ const JobsPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{
             width: "340px",
-            backgroundColor: "#fff",
+            // backgroundColor: "#fff",
             transition: "all 0.3s ease-in-out",
             boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)",
             "& .MuiOutlinedInput-root": {
@@ -195,7 +204,7 @@ const JobsPage = () => {
             ) : filteredJobs.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={9} align="center">
-                  <h3>No results found</h3>
+                  <NotFound />
                 </TableCell>
               </TableRow>
             ) : (

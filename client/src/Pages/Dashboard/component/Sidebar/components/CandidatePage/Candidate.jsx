@@ -16,10 +16,19 @@ import {
 } from "@mui/material";
 import * as XLSX from "xlsx";
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
-import ShimmerEffect from "../../../../../../../utils/Shimmer";
 import useOnline from "../../../../../../../utils/useOnline";
 import Btn from "../../../Button/Btnn";
-import Search from "../../../Button/Search";
+import { NotFound } from "../../../../../../../utils/Error";
+
+// Utility function to capitalize the first letter of each word
+const capitalizeWords = (str) => {
+  return str
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
+//import Search from "../../../Button/Search";
 import BasicModal from "../../../Model/Model";
 import RegistrationPage from "../../../../../Form/Addcandidate";
 
@@ -51,13 +60,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const User = ({ count, fullname, email, position, dob, number, gender, address }) => (
   <StyledTableRow>
     <StyledTableCell>{count}</StyledTableCell>
-    <StyledTableCell>{fullname}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(fullname)}</StyledTableCell>
     <StyledTableCell>{email}</StyledTableCell>
-    <StyledTableCell>{position}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(position)}</StyledTableCell>
     <StyledTableCell>{dob}</StyledTableCell>
     <StyledTableCell>{number}</StyledTableCell>
-    <StyledTableCell>{gender}</StyledTableCell>
-    <StyledTableCell>{address}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(gender)}</StyledTableCell>
+    <StyledTableCell>{capitalizeWords(address)}</StyledTableCell>
   </StyledTableRow>
 );
 
@@ -104,13 +113,13 @@ const CandidateData = () => {
     }
     const data = userInfo.map((user, index) => ({
       S_No: index + 1,
-      FullName: user.fullname,
+      FullName: capitalizeWords(user.fullname),
       Email: user.email,
-      Position: user.position,
+      Position: capitalizeWords(user.position),
       DOB: user.dob,
       PhoneNumber: user.number,
-      Gender: user.gender,
-      Address: user.address,
+      Gender: capitalizeWords(user.gender),
+      Address: capitalizeWords(user.address),
     }));
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -128,67 +137,68 @@ const CandidateData = () => {
   }, [searchTerm, userInfo]);
 
   return (
-    <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
-      <Box
-        sx={{
-          padding: "20px",
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" }, 
-          gap: 2, 
-          alignItems: "center",
-          width: "100%",
-          justifyContent: "space-between",
-        }}
-      >
-
-        {/* <Search /> */}
-        <TextField
-          label="Search"
-          variant="outlined"
-          size="small"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{ width: "300px" }}
-        />
-        <Box sx={{ display: "flex", gap: "10px" }}>
-          {/* <Btn text="Add Data" click={handleDownloadExcel} /> */}
-          <BasicModal text="Add Data" form={<RegistrationPage />} />
-          <Btn text="Download Excel" click={handleDownloadExcel} />
-        </Box>
+    <div style={{ padding: "20px" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+        <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
+          <Box
+            sx={{
+              padding: "20px",
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              gap: 2,
+              alignItems: "center",
+              width: "100%",
+              justifyContent: "space-between",
+            }}
+          >
+            <TextField
+              label="Search"
+              variant="outlined"
+              size="small"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              sx={{ width: "300px" }}
+            />
+            <Box sx={{ display: "flex", gap: "10px" }}>
+              <BasicModal text="Add Data" form={<RegistrationPage />} />
+              <Btn text="Download Excel" click={handleDownloadExcel} />
+            </Box>
+          </Box>
+          <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
+            <Table sx={{ minWidth: 700 }}>
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>S_No</StyledTableCell>
+                  <StyledTableCell>Full Name</StyledTableCell>
+                  <StyledTableCell>Email</StyledTableCell>
+                  <StyledTableCell>Position</StyledTableCell>
+                  <StyledTableCell>DOB</StyledTableCell>
+                  <StyledTableCell>Phone Number</StyledTableCell>
+                  <StyledTableCell>Gender</StyledTableCell>
+                  <StyledTableCell>Address</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={8} align="center">
+                      <CircularProgress />
+                    </TableCell>
+                  </TableRow>
+                ) : filteredUsers.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={8} align="center">
+                      <NotFound />
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filteredUsers.map((user, index) => <User key={index} count={index + 1} {...user} />)
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       </Box>
-      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
-        <Table sx={{ minWidth: 700 }}>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>S_No</StyledTableCell>
-              <StyledTableCell>Full Name</StyledTableCell>
-              <StyledTableCell>Email</StyledTableCell>
-              <StyledTableCell>Position</StyledTableCell>
-              <StyledTableCell>DOB</StyledTableCell>
-              <StyledTableCell>Phone Number</StyledTableCell>
-              <StyledTableCell>Gender</StyledTableCell>
-              <StyledTableCell>Address</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading ? (
-              <TableRow>
-                <TableCell colSpan={8} align="center">
-                  <CircularProgress />
-                </TableCell>
-              </TableRow>
-            ) : filteredUsers.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={8} align="center">
-                  <h3>No results found</h3>
-                </TableCell>
-              </TableRow>
-            ) : (
-              filteredUsers.map((user, index) => <User key={index} count={index + 1} {...user} />)
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
     </div>
   );
 };
