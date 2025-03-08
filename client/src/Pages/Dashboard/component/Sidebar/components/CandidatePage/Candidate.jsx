@@ -20,6 +20,8 @@ import ShimmerEffect from "../../../../../../../utils/Shimmer";
 import useOnline from "../../../../../../../utils/useOnline";
 import Btn from "../../../Button/Btnn";
 import Search from "../../../Button/Search";
+import BasicModal from "../../../Model/Model";
+import RegistrationPage from "../../../../../Form/Addcandidate";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -126,8 +128,19 @@ const CandidateData = () => {
   }, [searchTerm, userInfo]);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+    <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{
+          padding: "20px",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" }, 
+          gap: 2, 
+          alignItems: "center",
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
+
         {/* <Search /> */}
         <TextField
           label="Search"
@@ -138,9 +151,9 @@ const CandidateData = () => {
           sx={{ width: "300px" }}
         />
         <Box sx={{ display: "flex", gap: "10px" }}>
-          <Btn text="Add Data" click={handleDownloadExcel} />
+          {/* <Btn text="Add Data" click={handleDownloadExcel} /> */}
+          <BasicModal text="Add Data" form={<RegistrationPage />} />
           <Btn text="Download Excel" click={handleDownloadExcel} />
-
         </Box>
       </Box>
       <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
