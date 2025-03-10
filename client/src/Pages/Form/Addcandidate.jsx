@@ -6,11 +6,10 @@ import {
   Typography,
   Select,
   MenuItem,
+  useTheme,
 } from "@mui/material";
-//import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { JOBHUB_BASE_URL } from "../../api/api";
-
 
 const registerCandidate = async (formData) => {
   try {
@@ -28,6 +27,7 @@ const registerCandidate = async (formData) => {
 };
 
 const RegistrationPage = ({ onSubmit }) => {
+  const theme = useTheme(); // Get theme mode (light/dark)
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
@@ -58,29 +58,40 @@ const RegistrationPage = ({ onSubmit }) => {
   };
 
   return (
-    <Box>
-   
+    <Box
+      sx={{
+        backgroundColor: theme.palette.mode === "dark" ? "#121212" : "#f4f4f4",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "20px",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          boxShadow:
-            "0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)",
+          boxShadow: 3,
           borderRadius: "10px",
-          backgroundColor: "white",
+          backgroundColor: theme.palette.mode === "dark" ? "#1e1e1e" : "white",
           padding: "40px",
           width: "100%",
           maxWidth: "600px",
         }}
       >
-        <Typography sx={{ mb: 3 }} variant="h5" component="h1" gutterBottom fontWeight="bold" textAlign="center">
+        <Typography
+          sx={{ mb: 3, color: theme.palette.text.primary }}
+          variant="h5"
+          component="h1"
+          fontWeight="bold"
+          textAlign="center"
+        >
           Candidate Registration Form
         </Typography>
-        {/* <Typography variant="body2" textAlign="center" sx={{ color: "red", fontSize: "12px", mb: 3 }}>
-          Kindly complete the registration form below to apply. Your opportunity awaits!
-        </Typography> */}
+
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
           {["fullname", "email", "position", "dob", "number", "qualification", "address"].map((field) => (
             <Box sx={{ mb: 3 }} key={field}>
@@ -94,6 +105,25 @@ const RegistrationPage = ({ onSubmit }) => {
                 onChange={handleInputChange}
                 required
                 InputLabelProps={field === "dob" ? { shrink: true } : {}}
+                sx={{
+                  input: {
+                    color: theme.palette.text.primary,
+                  },
+                  label: {
+                    color: theme.palette.text.secondary,
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: theme.palette.divider,
+                    },
+                    "&:hover fieldset": {
+                      borderColor: theme.palette.primary.main,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: theme.palette.primary.main,
+                    },
+                  },
+                }}
               />
             </Box>
           ))}
@@ -107,6 +137,18 @@ const RegistrationPage = ({ onSubmit }) => {
               onChange={handleSelectChange}
               name="gender"
               required
+              sx={{
+                color: theme.palette.text.primary,
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.palette.divider,
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.palette.primary.main,
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.palette.primary.main,
+                },
+              }}
             >
               <MenuItem value="" disabled>
                 Select Gender

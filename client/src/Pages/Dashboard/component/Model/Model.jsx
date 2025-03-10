@@ -13,7 +13,6 @@ const style = {
   bgcolor: 'background.paper',
   mt: '13rem',
   borderRadius: '10px',
-  // maxHeight: '100px',
   scrollbarWidth: 'none',
   overflowY: 'auto',
   maxHeight: '100%',

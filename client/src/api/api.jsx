@@ -16,8 +16,9 @@ export const JOBHUB_BASE_URL = "https://jobhub-project-official-1.onrender.com/a
 // Company api
 //export const COMPANY_BASE_URL = 'https://jobhub-project-official-1.onrender.com/api/v1/admins/alljobs';
 
-
-//create candidates
+//update candidate
 //https://jobhub-project-official-1.onrender.com/api/candidates/updatecandidate
+
+
 
 //create job 

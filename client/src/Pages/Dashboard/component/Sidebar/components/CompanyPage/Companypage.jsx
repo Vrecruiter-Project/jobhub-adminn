@@ -123,6 +123,7 @@ const CompanyPage = () => {
   return (
     <div style={{ padding: "20px" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+        
         <TextField
           label="Search"
           variant="outlined"
@@ -131,11 +132,12 @@ const CompanyPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{ width: "300px" }}
         />
-       <Box sx={{ display: "flex", gap: "10px" }}>
-                 <Btn text="Add Data" click={handleDownloadExcel} />
-                 <Btn text="Download Excel" click={handleDownloadExcel} />
-       
-               </Box>
+      
+        <Box sx={{ display: "flex", gap: "10px" }}>
+
+          <Btn text="Download Excel" click={handleDownloadExcel} />
+
+        </Box>
       </Box>
       <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
         <Table sx={{ minWidth: 700 }}>
@@ -158,7 +160,7 @@ const CompanyPage = () => {
             ) : filteredJobs.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={5} align="center">
-                  <NotFound/>
+                  <NotFound />
                 </TableCell>
               </TableRow>
             ) : (
