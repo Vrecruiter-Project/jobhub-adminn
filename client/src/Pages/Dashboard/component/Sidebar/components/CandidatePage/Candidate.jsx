@@ -18,6 +18,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Grid,
 } from "@mui/material";
 import * as XLSX from "xlsx";
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
@@ -28,18 +29,19 @@ import BasicModal from "../../../Model/Model";
 import RegistrationPage from "../../../../../Form/Addcandidate";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-// import { styled } from '@mui/material/styles';
+import "../../../../../../../utils/Override.css"
+
 const HoverIcon = styled('span')(({ theme }) => ({
   cursor: 'pointer',
   transition: 'background-color 0.3s ease',
-  padding: '5px', // Optional: add some padding for better visual
-  borderRadius: '4px', // Optional: add border radius for rounded background
+  padding: '5px',
+  borderRadius: '4px',
 }));
 
 const GreenHoverIcon = styled(HoverIcon)(({ theme }) => ({
   '&:hover': {
     backgroundColor: 'lightgrey',
-    color:'green',
+    color: 'green',
   },
   marginRight: '20px',
 }));
@@ -47,17 +49,13 @@ const GreenHoverIcon = styled(HoverIcon)(({ theme }) => ({
 const RedHoverIcon = styled(HoverIcon)(({ theme }) => ({
   '&:hover': {
     backgroundColor: 'lightgrey',
-    color:"red",
+    color: 'red',
   },
 }));
-// const capitalizeWords = (str) =>
-//   str
-//     .split(" ")
-//     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-//     .join(" ");
+
 const capitalizeWords = (str) => {
   if (!str) {
-    return ""; // Or handle the case where str is undefined/null appropriately
+    return "";
   }
   return str
     .split(" ")
@@ -90,15 +88,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, _id }) => {
-//   const formattedDob = new Date(dob).toLocaleDateString();.
 const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, _id }) => {
   let formattedDob = "";
   if(dob){
-      formattedDob = new Date(dob).toISOString().split('T')[0];
+    formattedDob = new Date(dob).toISOString().split('T')[0];
   }
-
-
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState({
@@ -107,20 +101,13 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
     fullname,
     email,
     position,
-    
     number,
     gender,
     address,
   });
 
-  const handleEditClick = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
+  const handleEditClick = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
   const handleSave = async () => {
     await updateUser(selectedUser);
     setOpenModal(false);
@@ -144,14 +131,16 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
       <StyledTableCell>{number}</StyledTableCell>
       <StyledTableCell>{capitalizeWords(gender)}</StyledTableCell>
       <StyledTableCell>{capitalizeWords(address)}</StyledTableCell>
-      <StyledTableCell ><GreenHoverIcon>
-        <CheckIcon />
-      </GreenHoverIcon>
-      <RedHoverIcon>
-        <CloseIcon />
-      </RedHoverIcon></StyledTableCell>
       <StyledTableCell>
-        <Button variant="contained" style={{backgroundColor:"#4caf50"}} size="small" onClick={handleEditClick}>
+        <GreenHoverIcon>
+          <CheckIcon />
+        </GreenHoverIcon>
+        <RedHoverIcon>
+          <CloseIcon />
+        </RedHoverIcon>
+      </StyledTableCell>
+      <StyledTableCell>
+        <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small" onClick={handleEditClick}>
           Edit
         </Button>
       </StyledTableCell>
@@ -159,7 +148,7 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
       <Dialog open={openModal} onClose={handleCloseModal}>
         <DialogTitle>Edit Candidate</DialogTitle>
         <DialogContent>
-        <TextField
+          <TextField
             label="Full Name"
             variant="outlined"
             fullWidth
@@ -213,22 +202,9 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
             onChange={handleChange}
             sx={{ marginBottom: "16px" }}
           />
-          {/* <TextField
-            label="DOB"
-            variant="outlined"
-            fullWidth
-            name="dob"
-            type="date"
-            value={selectedUser.dob}
-            onChange={handleChange}
-            sx={{ marginBottom: "16px" }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          /> */}
         </DialogContent>
         <DialogActions>
-        <Button onClick={handleCloseModal} color="secondary">
+          <Button onClick={handleCloseModal} color="secondary">
             Cancel
           </Button>
           <Button onClick={handleSave} color="secondary">
@@ -330,7 +306,6 @@ const CandidateData = () => {
     setShowNewData((prev) => !prev);
   };
 
-  // Optimize filtering and data sorting with useMemo
   const filteredUsers = useMemo(() => {
     let filteredData = userInfo.filter((user) =>
       Object.values(user).some((value) =>
@@ -342,81 +317,64 @@ const CandidateData = () => {
   }, [searchTerm, userInfo, showNewData]);
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-      <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
-        <Box
-          sx={{
-            padding: "20px",
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            gap: 2,
-            alignItems: "center",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
+    <Box sx={{ marginBottom: "20px", padding:'30px' }}>
+      <Grid container spacing={2} >
+        <Grid item xs={12} md={6}>
           <TextField
             label="Search"
             variant="outlined"
             size="small"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{ width: "300px" }}
+            
           />
-          <Box sx={{ display: "flex", gap: "10px" }}>
-            <BasicModal text="Add Data" form={<RegistrationPage />} />
-            <Btn text="Download Excel" click={handleDownloadExcel} />
-            <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView}>
-              Toggle Data View
-            </Btn>
-          </Box>
-        </Box>
-        <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
-          <Table sx={{ minWidth: 700 }}>
-            <TableHead>
+        </Grid>
+        <Grid item xs={12} md={6} style={{display:'flex', justifyContent:"space-evenly", gap:'5px'}}>
+          <BasicModal text="Add Data" form={<RegistrationPage />} />
+          <Btn text="Download Excel" click={handleDownloadExcel} />
+          <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
+        </Grid>
+      </Grid>
+
+      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3, marginTop: "20px" }}>
+        <Table sx={{ minWidth: 700, tableLayout: "auto" }}>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>S_No</StyledTableCell>
+              <StyledTableCell>Full Name</StyledTableCell>
+              <StyledTableCell>Email</StyledTableCell>
+              <StyledTableCell>Position</StyledTableCell>
+              <StyledTableCell>DOB</StyledTableCell>
+              <StyledTableCell>Phone Number</StyledTableCell>
+              <StyledTableCell>Gender</StyledTableCell>
+              <StyledTableCell>Address</StyledTableCell>
+              <StyledTableCell>Enroll/Unenroll</StyledTableCell>
+              <StyledTableCell>Edit</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {loading ? (
               <TableRow>
-                <StyledTableCell>S_No</StyledTableCell>
-                <StyledTableCell>Full Name</StyledTableCell>
-                <StyledTableCell>Email</StyledTableCell>
-                <StyledTableCell>Position</StyledTableCell>
-                <StyledTableCell>DOB</StyledTableCell>
-                <StyledTableCell>Phone Number</StyledTableCell>
-                <StyledTableCell>Gender</StyledTableCell>
-                <StyledTableCell>Address</StyledTableCell>
-                <StyledTableCell>Enroll/Unenroll</StyledTableCell>
-                <StyledTableCell>Edit</StyledTableCell>
+                <TableCell colSpan={8} align="center">
+                  <CircularProgress />
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading ? (
-                <TableRow>
-                  <TableCell colSpan={8} align="center">
-                    <CircularProgress />
-                  </TableCell>
-                </TableRow>
-              ) : filteredUsers.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={8} align="center">
-                    <NotFound />
-                  </TableCell>
-                </TableRow>
-              ) : 
-              (
-                filteredUsers.map((user, index) => (
-                  <User key={index} count={index + 1} {...user} updateUser={updateUser} />
-                ))
-              )
-              
-              }
-
-
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+            ) : filteredUsers.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={8} align="center">
+                  <NotFound />
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredUsers.map((user, index) => (
+                <User key={index} count={index + 1} {...user} updateUser={updateUser} />
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };
 
 export default CandidateData;
-

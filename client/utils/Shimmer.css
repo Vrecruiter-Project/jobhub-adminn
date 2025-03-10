@@ -33,9 +33,9 @@ h2.text-2xl.font-sans.leading-16 {
   margin-bottom: 100px;
 }
 
-@media (max-width: 375px) {
-  h2.text-2xl.sm\:text-xl.md\:text-2xl.lg\:text-3xl.xl\:text-4xl.font-sans.leading-16.errorTier {
-    font-size: 18px; /* Adjust font size for very small screens */
+@media (max-width: 376px) {
+  .errorTier {
+    font-size: 18px;
   }
 }
 
