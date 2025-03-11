@@ -70,9 +70,9 @@ const CandidateData = () => {
   }, [searchTerm, userInfo, showNewData]);
 
   return (
-    <Box sx={{ marginBottom: "20px", padding:'30px' }}>
+    <Box sx={{ marginBottom: "20px", padding: '30px' }}>
       <Grid container spacing={2} >
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'flex-start', gap: '10px' }}>
           <TextField
             label="Search"
             variant="outlined"
@@ -80,11 +80,12 @@ const CandidateData = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
         </Grid>
-        <Grid item xs={12} md={6} style={{display:'flex', justifyContent:"space-evenly", gap:'5px'}}>
+        <Grid item xs={12} md={6} style={{ display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
           <BasicModal text="Add Data" form={<RegistrationPage />} />
           <Btn text="Download Excel" click={() => handleDownloadExcel(userInfo)} />
-          <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
+
         </Grid>
       </Grid>
 
@@ -99,8 +100,9 @@ const CandidateData = () => {
               <StyledTableCell>DOB</StyledTableCell>
               <StyledTableCell>Phone Number</StyledTableCell>
               <StyledTableCell>Gender</StyledTableCell>
+              <StyledTableCell>Walk-in</StyledTableCell>
               <StyledTableCell>Address</StyledTableCell>
-             {/* <StyledTableCell>Enroll/Unenroll</StyledTableCell> */}
+              <StyledTableCell>Enrolement</StyledTableCell>
               <StyledTableCell>Remark</StyledTableCell>
               <StyledTableCell>Edit</StyledTableCell>
             </TableRow>

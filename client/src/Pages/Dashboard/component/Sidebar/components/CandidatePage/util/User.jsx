@@ -14,11 +14,16 @@ import { StyledTableCell, StyledTableRow, GreenHoverIcon, RedHoverIcon } from ".
 import { capitalizeWords } from "./CapitalWord";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
-const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, remark, _id }) => {
+const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, enrollment, remark, _id ,createdAt }) => {
     let formattedDob = "";
     if (dob) {
         formattedDob = new Date(dob).toISOString().split('T')[0];
+    }
+    let walkindate = "";
+    if (createdAt) {
+        walkindate = new Date(createdAt).toISOString().split('T')[0];
     }
 
     const [openModal, setOpenModal] = useState(false);
@@ -30,8 +35,10 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
         position,
         number,
         gender,
-        remark: remark || "", 
+        remark: remark || "",
         address,
+        enrollment: enrollment || "",
+        createdAt
 
     });
 
@@ -59,17 +66,12 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
             <StyledTableCell>{formattedDob}</StyledTableCell>
             <StyledTableCell>{number}</StyledTableCell>
             <StyledTableCell>{capitalizeWords(gender)}</StyledTableCell>
+            <StyledTableCell>{walkindate}</StyledTableCell>
+
             <StyledTableCell>{capitalizeWords(address)}</StyledTableCell>
-            {/* <StyledTableCell>
-                <GreenHoverIcon>
-                    <CheckIcon />
-                </GreenHoverIcon>
-                <RedHoverIcon>
-                    <CloseIcon />
-                </RedHoverIcon>
-            </StyledTableCell> */}
-           <StyledTableCell>{remark ? capitalizeWords(remark) : "📃"}</StyledTableCell>
-           <StyledTableCell>
+            <StyledTableCell>{enrollment ? '✅' : '❌'}</StyledTableCell>
+            <StyledTableCell>{remark ? capitalizeWords(remark) : "📃"}</StyledTableCell>
+            <StyledTableCell>
                 <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small"
                     onClick={handleEditClick}>
                     Edit
@@ -77,8 +79,18 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
             </StyledTableCell>
 
             <Dialog open={openModal} onClose={handleCloseModal}>
-                <DialogTitle>Edit Candidate</DialogTitle>
+                <DialogTitle sx={{ fontSize: '30px' }}>Edit Candidate</DialogTitle>
                 <DialogContent>
+                    <FormControlLabel
+                        sx={{ float: 'right' }}
+                        control={
+                            <Checkbox
+                                checked={selectedUser.enrollment}
+                                onChange={(e) => handleChange({ target: { name: 'enrollment', value: e.target.checked } })}
+                            />
+                        }
+                        label="Enrolement"
+                    />
                     <TextField
                         label="Full Name"
                         variant="outlined"
