@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  TableCell,
-  TableRow,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
+    TableCell,
+    TableRow,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TextField,
 } from "@mui/material";
 import { StyledTableCell, StyledTableRow, GreenHoverIcon, RedHoverIcon } from "./StyledComponents";
 import { capitalizeWords } from "./CapitalWord";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 
-const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, _id }) => {
+const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, remark, _id }) => {
     let formattedDob = "";
     if (dob) {
         formattedDob = new Date(dob).toISOString().split('T')[0];
@@ -30,7 +30,9 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
         position,
         number,
         gender,
+        remark: remark || "", 
         address,
+
     });
 
     const handleEditClick = () => setOpenModal(true);
@@ -58,16 +60,18 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
             <StyledTableCell>{number}</StyledTableCell>
             <StyledTableCell>{capitalizeWords(gender)}</StyledTableCell>
             <StyledTableCell>{capitalizeWords(address)}</StyledTableCell>
-            <StyledTableCell>
+            {/* <StyledTableCell>
                 <GreenHoverIcon>
                     <CheckIcon />
                 </GreenHoverIcon>
                 <RedHoverIcon>
                     <CloseIcon />
                 </RedHoverIcon>
-            </StyledTableCell>
-            <StyledTableCell>
-                <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small" onClick={handleEditClick}>
+            </StyledTableCell> */}
+           <StyledTableCell>{remark ? capitalizeWords(remark) : "📃"}</StyledTableCell>
+           <StyledTableCell>
+                <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small"
+                    onClick={handleEditClick}>
                     Edit
                 </Button>
             </StyledTableCell>
@@ -120,12 +124,23 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                         onChange={handleChange}
                         sx={{ marginBottom: "16px" }}
                     />
+
                     <TextField
                         label="Address"
                         variant="outlined"
                         fullWidth
                         name="address"
                         value={selectedUser.address}
+                        onChange={handleChange}
+                        sx={{ marginBottom: "16px" }}
+                    />
+
+                    <TextField
+                        label="Add remark"
+                        variant="outlined"
+                        fullWidth
+                        name="remark"
+                        value={selectedUser.remark}
                         onChange={handleChange}
                         sx={{ marginBottom: "16px" }}
                     />

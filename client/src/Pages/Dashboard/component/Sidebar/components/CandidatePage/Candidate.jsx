@@ -100,7 +100,8 @@ const CandidateData = () => {
               <StyledTableCell>Phone Number</StyledTableCell>
               <StyledTableCell>Gender</StyledTableCell>
               <StyledTableCell>Address</StyledTableCell>
-              <StyledTableCell>Enroll/Unenroll</StyledTableCell>
+             {/* <StyledTableCell>Enroll/Unenroll</StyledTableCell> */}
+              <StyledTableCell>Remark</StyledTableCell>
               <StyledTableCell>Edit</StyledTableCell>
             </TableRow>
           </TableHead>

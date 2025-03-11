@@ -26,8 +26,8 @@ const registerCandidate = async (formData) => {
   }
 };
 
-const RegistrationPage = ({ onSubmit }) => {
-  const theme = useTheme(); // Get theme mode (light/dark)
+const RegistrationPage = () => {
+  const theme = useTheme(); 
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
@@ -37,6 +37,7 @@ const RegistrationPage = ({ onSubmit }) => {
     qualification: "",
     gender: "",
     address: "",
+    remark:"",
   });
 
   const handleInputChange = (e) => {
@@ -93,7 +94,7 @@ const RegistrationPage = ({ onSubmit }) => {
         </Typography>
 
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-          {["fullname", "email", "position", "dob", "number", "qualification", "address"].map((field) => (
+          {["fullname", "email", "position", "dob", "number", "qualification", "address", "remark"].map((field) => (
             <Box sx={{ mb: 3 }} key={field}>
               <TextField
                 fullWidth
