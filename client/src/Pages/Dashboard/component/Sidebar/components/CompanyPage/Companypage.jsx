@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import * as XLSX from "xlsx";
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
-
 import Btn from "../../../Button/Btnn";
 import { NotFound } from "../../../../../../../utils/Error";
 
