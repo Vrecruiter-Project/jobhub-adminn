@@ -16,7 +16,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Checkbox, FormControlLabel } from '@mui/material';
 
-const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, enrollment, remark, _id ,createdAt }) => {
+const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, enrollment, remark, _id, createdAt }) => {
     let formattedDob = "";
     if (dob) {
         formattedDob = new Date(dob).toISOString().split('T')[0];
@@ -89,7 +89,7 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                                 onChange={(e) => handleChange({ target: { name: 'enrollment', value: e.target.checked } })}
                             />
                         }
-                        label="Enrolement"
+                        label="Enrollment"
                     />
                     <TextField
                         label="Full Name"

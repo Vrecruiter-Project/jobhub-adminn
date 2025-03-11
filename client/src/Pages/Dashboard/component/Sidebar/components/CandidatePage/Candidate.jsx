@@ -22,6 +22,8 @@ import User from "./util/User";
 import { handleDownloadExcel } from "./util/excelUtils";
 import { StyledTableCell } from "./util/StyledComponents";
 import { updateCandidate } from "./Services/candidateApi";
+import { InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 const CandidateData = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -72,13 +74,20 @@ const CandidateData = () => {
   return (
     <Box sx={{ marginBottom: "20px", padding: '30px' }}>
       <Grid container spacing={2} >
-        <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'flex-start', gap: '10px' }}>
+        <Grid item xs={12} md={6} sx={{ alignItems: 'center', display: 'flex', justifyContent: 'flex-start', gap: '10px' }}>
           <TextField
             label="Search"
             variant="outlined"
             size="small"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
           />
           <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
         </Grid>
@@ -102,7 +111,7 @@ const CandidateData = () => {
               <StyledTableCell>Gender</StyledTableCell>
               <StyledTableCell>Walk-in</StyledTableCell>
               <StyledTableCell>Address</StyledTableCell>
-              <StyledTableCell>Enrolement</StyledTableCell>
+              <StyledTableCell>Enrollment</StyledTableCell>
               <StyledTableCell>Remark</StyledTableCell>
               <StyledTableCell>Edit</StyledTableCell>
             </TableRow>
