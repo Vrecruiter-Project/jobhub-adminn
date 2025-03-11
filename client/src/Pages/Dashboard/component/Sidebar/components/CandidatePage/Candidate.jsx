@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -10,225 +9,19 @@ import {
   Paper,
   Box,
   TextField,
-  styled,
-  tableCellClasses,
   CircularProgress,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Grid,
 } from "@mui/material";
-import * as XLSX from "xlsx";
+
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
-import useOnline from "../../../../../../../utils/useOnline";
 import Btn from "../../../Button/Btnn";
 import { NotFound } from "../../../../../../../utils/Error";
 import BasicModal from "../../../Model/Model";
 import RegistrationPage from "../../../../../Form/Addcandidate";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import "../../../../../../../utils/Override.css"
-
-const HoverIcon = styled('span')(({ theme }) => ({
-  cursor: 'pointer',
-  transition: 'background-color 0.3s ease',
-  padding: '5px',
-  borderRadius: '4px',
-}));
-
-const GreenHoverIcon = styled(HoverIcon)(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: 'lightgrey',
-    color: 'green',
-  },
-  marginRight: '20px',
-}));
-
-const RedHoverIcon = styled(HoverIcon)(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: 'lightgrey',
-    color: 'red',
-  },
-}));
-
-const capitalizeWords = (str) => {
-  if (!str) {
-    return "";
-  }
-  return str
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
-};
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#4CAF50",
-    color: theme.palette.common.white,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    padding: "16px",
-    textAlign: "center",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-    padding: "12px",
-    textAlign: "center",
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  "&:hover": {
-    backgroundColor: theme.palette.action.selected,
-  },
-}));
-
-const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, _id }) => {
-  let formattedDob = "";
-  if(dob){
-    formattedDob = new Date(dob).toISOString().split('T')[0];
-  }
-
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState({
-    _id,
-    count,
-    fullname,
-    email,
-    position,
-    number,
-    gender,
-    address,
-  });
-
-  const handleEditClick = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
-  const handleSave = async () => {
-    await updateUser(selectedUser);
-    setOpenModal(false);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSelectedUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
-  };
-
-  return (
-    <StyledTableRow key={_id}>
-      <StyledTableCell>{count}</StyledTableCell>
-      <StyledTableCell>{capitalizeWords(fullname)}</StyledTableCell>
-      <StyledTableCell>{email}</StyledTableCell>
-      <StyledTableCell>{capitalizeWords(position)}</StyledTableCell>
-      <StyledTableCell>{formattedDob}</StyledTableCell>
-      <StyledTableCell>{number}</StyledTableCell>
-      <StyledTableCell>{capitalizeWords(gender)}</StyledTableCell>
-      <StyledTableCell>{capitalizeWords(address)}</StyledTableCell>
-      <StyledTableCell>
-        <GreenHoverIcon>
-          <CheckIcon />
-        </GreenHoverIcon>
-        <RedHoverIcon>
-          <CloseIcon />
-        </RedHoverIcon>
-      </StyledTableCell>
-      <StyledTableCell>
-        <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small" onClick={handleEditClick}>
-          Edit
-        </Button>
-      </StyledTableCell>
-
-      <Dialog open={openModal} onClose={handleCloseModal}>
-        <DialogTitle>Edit Candidate</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Full Name"
-            variant="outlined"
-            fullWidth
-            name="fullname"
-            value={selectedUser.fullname}
-            onChange={handleChange}
-            sx={{ marginBottom: "16px", marginTop: "13px" }}
-          />
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            name="email"
-            value={selectedUser.email}
-            onChange={handleChange}
-            sx={{ marginBottom: "16px" }}
-          />
-          <TextField
-            label="Position"
-            variant="outlined"
-            fullWidth
-            name="position"
-            value={selectedUser.position}
-            onChange={handleChange}
-            sx={{ marginBottom: "16px" }}
-          />
-          <TextField
-            label="Phone Number"
-            variant="outlined"
-            fullWidth
-            name="number"
-            value={selectedUser.number}
-            onChange={handleChange}
-            sx={{ marginBottom: "16px" }}
-          />
-          <TextField
-            label="Gender"
-            variant="outlined"
-            fullWidth
-            name="gender"
-            value={selectedUser.gender}
-            onChange={handleChange}
-            sx={{ marginBottom: "16px" }}
-          />
-          <TextField
-            label="Address"
-            variant="outlined"
-            fullWidth
-            name="address"
-            value={selectedUser.address}
-            onChange={handleChange}
-            sx={{ marginBottom: "16px" }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleSave} color="secondary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </StyledTableRow>
-  );
-};
-
-User.propTypes = {
-  count: PropTypes.number.isRequired,
-  fullname: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  position: PropTypes.string.isRequired,
-  dob: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  gender: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  updateUser: PropTypes.func.isRequired,
-  _id: PropTypes.string.isRequired,
-};
-
+import User from "./util/User";
+import { handleDownloadExcel } from "./util/excelUtils";
+import { StyledTableCell } from "./util/StyledComponents";
+import { updateCandidate } from "./Services/candidateApi";
 const CandidateData = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -251,26 +44,9 @@ const CandidateData = () => {
     };
     getUserInfo();
   }, []);
-
-  const off = useOnline();
-  if (!off) return <h1>You are Offline, please connect to the internet!</h1>;
-
   const updateUser = async (updatedUser) => {
     try {
-      const response = await fetch(`${JOBHUB_BASE_URL}/candidates/updatecandidate/${updatedUser._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedUser),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update user");
-      }
-
-      const updatedData = await response.json();
-
+      const updatedData = await updateCandidate(updatedUser); // Use the imported function
       setUserInfo((prevData) =>
         prevData.map((user) => (user._id === updatedUser._id ? updatedData : user))
       );
@@ -279,29 +55,6 @@ const CandidateData = () => {
       alert("Failed to update user, please try again.");
     }
   };
-
-  const handleDownloadExcel = () => {
-    if (userInfo.length === 0) {
-      alert("No data available to download.");
-      return;
-    }
-
-    const data = userInfo.map((user, index) => ({
-      S_No: index + 1,
-      FullName: capitalizeWords(user.fullname),
-      Email: user.email,
-      Position: capitalizeWords(user.position),
-      DOB: user.dob,
-      PhoneNumber: user.number,
-      Gender: capitalizeWords(user.gender),
-      Address: capitalizeWords(user.address),
-    }));
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Candidates");
-    XLSX.writeFile(workbook, "CandidatesData.xlsx");
-  };
-
   const toggleDataView = () => {
     setShowNewData((prev) => !prev);
   };
@@ -326,12 +79,11 @@ const CandidateData = () => {
             size="small"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            
           />
         </Grid>
         <Grid item xs={12} md={6} style={{display:'flex', justifyContent:"space-evenly", gap:'5px'}}>
           <BasicModal text="Add Data" form={<RegistrationPage />} />
-          <Btn text="Download Excel" click={handleDownloadExcel} />
+          <Btn text="Download Excel" click={() => handleDownloadExcel(userInfo)} />
           <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
         </Grid>
       </Grid>
