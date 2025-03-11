@@ -1,6 +1,6 @@
 import  { useState } from "react";
 import { BASE_URL } from "../../api/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bg from "../../assets/signin.jpg"
 
 const Adminlogin = () => {
@@ -57,6 +57,7 @@ const Adminlogin = () => {
                   onChange={(e) => setPassword(e.target.value)} id="password" type="password" placeholder="Enter your password" className="bg-amber-100 flex items-center w-full px-5 py-4 mb-5 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl" />
                 <button disabled={loading} className="w-full flex items-center bg-green-400  px-5 py-4 mt-5 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl text-center justify-center md:w-96 cursor-pointer "> {loading ? "Signing in..." : "Sign In"}</button>
               </form>
+              <Link sx={{ textDecoration: "none" }} to='#'>Log in as HR</Link>
             </div>
           </div>
         </div>
