@@ -160,11 +160,9 @@ const JobsPage = () => {
           sx={{ width: "300px" }}
         />
         <Box sx={{ display: "flex", gap: "10px" }}>
-          <BasicModal text="Add Data" form={<Addjob/>}/>
+          <BasicModal btn={<Btn text="Add Data"/>} form={<Addjob/>}/>
           <Btn text="Download Excel" click={handleDownloadExcel} />
-          {/* <Button variant="contained" onClick={toggleDataView}>
-                    {showNewData ? "Older Data" : "New Data"}
-                  </Button> */}
+          
         </Box>
       </Box>
       <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
