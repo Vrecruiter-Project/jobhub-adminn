@@ -7,8 +7,8 @@ function App() {
   return (
     <>
 
-      <AppProviderBasic />
-      {/* <Approuter /> */}
+      {/* <AppProviderBasic /> */}
+      <Approuter />
     </>
   )
 }
