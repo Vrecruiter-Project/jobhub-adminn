@@ -70,7 +70,14 @@ const CandidateData = () => {
     );
 
     return showNewData ? filteredData : filteredData.slice().reverse();
-  }, [searchTerm, userInfo, showNewData]);
+  }, [searchTerm, userInfo, showNewData],
+  
+  // console.log(userInfo[0]?.fullname)
+    
+  //   userInfo.map((name) => {
+  //   console.log(name?.createdAt.length)
+  // })
+  );
 
   return (
     <Box sx={{ marginBottom: "20px", padding: '30px' }}>
@@ -115,6 +122,7 @@ const CandidateData = () => {
               <StyledTableCell>Enrollment</StyledTableCell>
               <StyledTableCell>Remark</StyledTableCell>
               <StyledTableCell>Edit</StyledTableCell>
+              <StyledTableCell>Allot</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
