@@ -16,6 +16,7 @@ import { capitalizeWords } from "./CapitalWord";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import { CompanyModal } from "../Services/candidateApi";
 
 const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, enrollment, remark, _id, createdAt }) => {
     let formattedDob = "";
