@@ -37,7 +37,7 @@ const RegistrationPage = () => {
     qualification: "",
     gender: "",
     address: "",
-    remark:"",
+    // remark:"",
   });
 
   const handleInputChange = (e) => {
@@ -94,7 +94,7 @@ const RegistrationPage = () => {
         </Typography>
 
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-          {["fullname", "email", "position", "dob", "number", "qualification", "address", "remark"].map((field) => (
+          {["fullname", "email", "position", "dob", "number", "qualification", "address"].map((field) => (
             <Box sx={{ mb: 3 }} key={field}>
               <TextField
                 fullWidth
