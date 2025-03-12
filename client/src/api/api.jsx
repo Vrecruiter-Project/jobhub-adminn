@@ -19,3 +19,8 @@ export const JOBHUB_BASE_URL = "https://jobhub-project-official-1.onrender.com/a
 
 //create job
 //https://jobhub-project-official-1.onrender.com/api/v1/jobs/create-job-admin
+
+
+//get jpbs/candidates
+//https://jobhub-project-official-1.onrender.com/api/v1/admins/alljobs
+

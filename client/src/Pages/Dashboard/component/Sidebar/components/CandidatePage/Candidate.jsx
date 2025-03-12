@@ -70,13 +70,7 @@ const CandidateData = () => {
     );
 
     return showNewData ? filteredData : filteredData.slice().reverse();
-  }, [searchTerm, userInfo, showNewData],
-  
-  // console.log(userInfo[0]?.fullname)
-    
-  //   userInfo.map((name) => {
-  //   console.log(name?.createdAt.length)
-  // })
+  }, [searchTerm, userInfo, showNewData]
   );
 
   return (
@@ -100,7 +94,7 @@ const CandidateData = () => {
           <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
         </Grid>
         <Grid item xs={12} md={6} style={{ display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
-        <BasicModal btn={<Btn text="Add Data"/>} form={<RegistrationPage />} />
+          <BasicModal btn={<Btn text="Add Data" />} form={<RegistrationPage />} />
           <Btn text="Download Excel" click={() => handleDownloadExcel(userInfo)} />
 
         </Grid>

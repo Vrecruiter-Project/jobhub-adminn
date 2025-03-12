@@ -16,7 +16,6 @@ import { capitalizeWords } from "./CapitalWord";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Checkbox, FormControlLabel } from '@mui/material';
-import { CompanyModal } from "../Services/candidateApi";
 
 const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, enrollment, remark, _id, createdAt }) => {
     let formattedDob = "";
@@ -78,7 +77,6 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
             <StyledTableCell>{number}</StyledTableCell>
             <StyledTableCell>{capitalizeWords(gender)}</StyledTableCell>
             <StyledTableCell>{walkindate}</StyledTableCell>
-
             <StyledTableCell>{capitalizeWords(address)}</StyledTableCell>
             <StyledTableCell>{enrollment ? '✅' : '❌'}</StyledTableCell>
             <StyledTableCell>{remark ? capitalizeWords(remark) : "📃"}</StyledTableCell>
@@ -89,18 +87,12 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                 </Button>
             </StyledTableCell>
             <StyledTableCell>
-                <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small" onClick={handleAssignClick}>
+                <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small"
+                >
                     Assign
                 </Button>
             </StyledTableCell>
 
-            {/* Dialog for Assign Button */}
-            <Dialog open={jobModal} onClose={handleClose}>
-                <DialogTitle>Assign Job to {[number,fullname]}</DialogTitle> {/* Display row number here */}
-                <DialogContent>
-                    <CompanyModal rowNumber={[number,fullname]} /> {/* Pass row number as a prop */}
-                </DialogContent>
-            </Dialog>
 
             {/* Dialog for Edit Button */}
             <Dialog open={openModal} onClose={handleCloseModal}>
