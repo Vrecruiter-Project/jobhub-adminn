@@ -24,6 +24,7 @@ import { StyledTableCell } from "./util/StyledComponents";
 import { updateCandidate } from "./Services/candidateApi";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+
 const CandidateData = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -92,7 +93,7 @@ const CandidateData = () => {
           <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
         </Grid>
         <Grid item xs={12} md={6} style={{ display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
-          <BasicModal text="Add Data" form={<RegistrationPage />} />
+        <BasicModal btn={<Btn text="Add Data"/>} form={<RegistrationPage />} />
           <Btn text="Download Excel" click={() => handleDownloadExcel(userInfo)} />
 
         </Grid>

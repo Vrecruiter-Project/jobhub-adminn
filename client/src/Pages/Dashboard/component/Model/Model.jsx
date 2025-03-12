@@ -18,14 +18,16 @@ const style = {
   maxHeight: '100%',
 };
 
-export default function BasicModal({ form, text }) {
+export default function BasicModal({ form,btn,btnStyle }) {
+  
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Btn text={text} click={handleOpen} />
+      
+      <button style={btnStyle} onClick={handleOpen}>{btn} </button>
 
       <Modal sx={{
         maxHeight: '70vh',
