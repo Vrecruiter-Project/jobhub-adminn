@@ -4,8 +4,28 @@ import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone'; // for co
 import ArrowForwardTwoToneIcon from '@mui/icons-material/ArrowForwardTwoTone';
 import HowToRegTwoToneIcon from '@mui/icons-material/HowToRegTwoTone';
 import AddCircleOutlineTwoToneIcon from '@mui/icons-material/AddCircleOutlineTwoTone';
+import { Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { useState } from 'react';
+import BasicModal from '../../../../Model/Model';
+import AddJobs from "../../../../../../Form/Addjob";
+import AddCandidates from "../../../../../../Form/Addcandidate"
+import Btn from '../../../../Button/Btnn';
+
+
 
 const Details = () => {
+    const buttonStyle = {
+        backgroundColor: '#7483bd', 
+        color: 'Black',
+        padding: '10px 50px',
+        borderRadius: '8px',
+        border: 'none',
+        cursor: 'pointer',
+        fontSize: '1rem', 
+        fontWeight: '500', 
+        width:"100%",
+      };
+    
     return (
         <>
             <div className='flex flex-wrap justify-center items-center gap-6 p-4'>
@@ -19,7 +39,7 @@ const Details = () => {
                         Company
                     </div>
                     <div style={{ backgroundColor: '#bcfd49' }} className='p-1 flex items-center justify-between rounded-2xl px-5 mt-1'>
-                        View Details
+                    <Button  style={{color:"black"}}variant="text" > View Details</Button>
                         <ArrowForwardTwoToneIcon />
                     </div>
                 </div>
@@ -34,8 +54,13 @@ const Details = () => {
                         Jobs
                     </div>
                     <div style={{ backgroundColor: '#bcfd49' }} className='p-1 flex items-center justify-between rounded-2xl px-5 mt-1'>
-                        View Details
-                        <ArrowForwardTwoToneIcon />
+
+                   {/* Add button for jobs */}
+<Button  style={{color:"black"}}variant="text"> View Jobs
+    
+</Button><ArrowForwardTwoToneIcon />
+
+
                     </div>
                 </div>
 
@@ -62,8 +87,22 @@ const Details = () => {
                         </div>
                     </div>
                     <div style={{ backgroundColor: '#7483bd' }} className='p-1 flex items-center justify-center gap-3.5 rounded-2xl px-5 mt-1'>
-                        Add Job
-                        <AddCircleOutlineTwoToneIcon />
+
+
+                        {/* add button to add jobs */}
+
+                        <BasicModal  btn ='Add jobs' form={<AddJobs/>} btnStyle={buttonStyle}> </BasicModal>
+
+
+
+
+
+                    <AddCircleOutlineTwoToneIcon />
+
+
+    
+
+                       
                     </div>
                 </div>
                 <div style={{ backgroundColor: '#62fcaf' }} className='w-full sm:w-80 p-3 rounded-2xl'>
@@ -73,8 +112,11 @@ const Details = () => {
                         </div>
                     </div>
                     <div style={{ backgroundColor: '#7483bd' }} className='p-1 flex items-center justify-center gap-3.5 rounded-2xl px-5 mt-1'>
-                        Add Candidate
+                    <BasicModal  btn='Add Candidate' form={<AddCandidates/>} btnStyle={buttonStyle} />
                         <AddCircleOutlineTwoToneIcon />
+
+                      
+
                     </div>
                 </div>
             </div>
@@ -83,3 +125,6 @@ const Details = () => {
 };
 
 export default Details;
+
+
+
