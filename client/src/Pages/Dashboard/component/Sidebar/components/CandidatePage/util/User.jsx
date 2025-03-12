@@ -10,11 +10,13 @@ import {
     DialogTitle,
     TextField,
 } from "@mui/material";
-import { StyledTableCell, StyledTableRow, GreenHoverIcon, RedHoverIcon } from "./StyledComponents";
+
+import { StyledTableCell, StyledTableRow } from "./StyledComponents";
 import { capitalizeWords } from "./CapitalWord";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import { CompanyModal } from "../Services/candidateApi";
 
 const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, enrollment, remark, _id, createdAt }) => {
     let formattedDob = "";
@@ -27,6 +29,7 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
     }
 
     const [openModal, setOpenModal] = useState(false);
+    const [jobModal, setJobModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState({
         _id,
         count,
@@ -41,6 +44,14 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
         createdAt
 
     });
+
+    const handleAssignClick = () => {
+        setJobModal(true); // Open the modal
+    };
+
+    const handleClose = () => {
+        setJobModal(false); // Close the modal
+    };
 
     const handleEditClick = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
@@ -77,7 +88,21 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                     Edit
                 </Button>
             </StyledTableCell>
+            <StyledTableCell>
+                <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small" onClick={handleAssignClick}>
+                    Assign
+                </Button>
+            </StyledTableCell>
 
+            {/* Dialog for Assign Button */}
+            <Dialog open={jobModal} onClose={handleClose}>
+                <DialogTitle>Assign Job to {[number,fullname]}</DialogTitle> {/* Display row number here */}
+                <DialogContent>
+                    <CompanyModal rowNumber={[number,fullname]} /> {/* Pass row number as a prop */}
+                </DialogContent>
+            </Dialog>
+
+            {/* Dialog for Edit Button */}
             <Dialog open={openModal} onClose={handleCloseModal}>
                 <DialogTitle sx={{ fontSize: '30px' }}>Edit Candidate</DialogTitle>
                 <DialogContent>
@@ -136,7 +161,6 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                         onChange={handleChange}
                         sx={{ marginBottom: "16px" }}
                     />
-
                     <TextField
                         label="Address"
                         variant="outlined"
@@ -146,7 +170,6 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                         onChange={handleChange}
                         sx={{ marginBottom: "16px" }}
                     />
-
                     <TextField
                         label="Add remark"
                         variant="outlined"
