@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-    TableCell,
-    TableRow,
     Button,
     Dialog,
     DialogActions,
@@ -13,9 +11,9 @@ import {
 
 import { StyledTableCell, StyledTableRow } from "./StyledComponents";
 import { capitalizeWords } from "./CapitalWord";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import BasicModal from "../../../../Model/Model";
+import Assigncomp from "../../../../../../Form/Assigncomp";
 
 const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, enrollment, remark, _id, createdAt }) => {
     let formattedDob = "";
@@ -28,7 +26,6 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
     }
 
     const [openModal, setOpenModal] = useState(false);
-    const [jobModal, setJobModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState({
         _id,
         count,
@@ -44,13 +41,7 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
 
     });
 
-    const handleAssignClick = () => {
-        setJobModal(true); // Open the modal
-    };
 
-    const handleClose = () => {
-        setJobModal(false); // Close the modal
-    };
 
     const handleEditClick = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
@@ -86,12 +77,11 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                     Edit
                 </Button>
             </StyledTableCell>
-            <StyledTableCell>
-                <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small"
-                >
+            {enrollment ? < StyledTableCell >
+                <BasicModal form={<Assigncomp number={number} />} btn={<Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small">
                     Assign
-                </Button>
-            </StyledTableCell>
+                </Button>} btnStyle={{ backgroundColor: "#4caf50" }} />
+            </StyledTableCell> : null}
 
 
             {/* Dialog for Edit Button */}
@@ -181,7 +171,7 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                     </Button>
                 </DialogActions>
             </Dialog>
-        </StyledTableRow>
+        </StyledTableRow >
     );
 };
 
