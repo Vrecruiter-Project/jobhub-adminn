@@ -1,30 +1,51 @@
-// import { number } from "prop-types";
 import React, { useState, useEffect } from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 
-const Assigncomp = ({number}) => {
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
+
+const Assigncomp = ({ number }) => {
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch data from the API
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://jobhub-project-official-1.onrender.com/api/v1/admins/alljobs"
-        );
+        const response = await fetch("https://jobhub-project-official-1.onrender.com/api/v1/admins/alljobs");
         const result = await response.json();
-        console.log("API Response:", result);
 
-        // Ensure the response structure matches
         if (result && Array.isArray(result.jobs)) {
           setData(result.jobs);
         } else {
           throw new Error("Unexpected API response structure");
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
         setError("Failed to load data. Please try again.");
       } finally {
         setLoading(false);
@@ -34,14 +55,12 @@ const Assigncomp = ({number}) => {
     fetchData();
   }, []);
 
-  // Handle row selection
   const handleRowSelection = (id) => {
     setSelectedRows((prev) =>
       prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
     );
   };
 
-  // Handle "Select All" toggle
   const handleSelectAll = () => {
     if (selectedRows.length === data.length) {
       setSelectedRows([]);
@@ -50,13 +69,11 @@ const Assigncomp = ({number}) => {
     }
   };
 
-  // Function to open WhatsApp with a message
   const sendMessage = (phoneNumber, message) => {
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank"); // Open WhatsApp in a new tab
+    window.open(url, "_blank");
   };
 
-  // Handle Send Button Click
   const handleSend = () => {
     const selectedData = data.filter((row) => selectedRows.includes(row._id));
 
@@ -65,7 +82,6 @@ const Assigncomp = ({number}) => {
       return;
     }
 
-    // Construct the message with selected job details
     const message = selectedData
       .map(
         (row, index) =>
@@ -73,63 +89,82 @@ const Assigncomp = ({number}) => {
       )
       .join("\n\n");
 
- 
-    const phoneNumber = 91+number;
+    const phoneNumber = `91${number}`;
 
     sendMessage(phoneNumber, `Here are the selected job details:\n\n${message}`);
   };
 
-  if (loading) return <p>Loading data...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-
   return (
-    <div>
-      <h2>Job Listings</h2>
-      <table border="1" cellPadding="10" cellSpacing="0">
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                onChange={handleSelectAll}
-                checked={selectedRows.length === data.length && data.length > 0}
-              />
-            </th>
-            <th>Company Name</th>
-            <th>Job Title</th>
-            <th>Number of Positions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.length > 0 ? (
-            data.map((row) => (
-              <tr key={row._id}>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedRows.includes(row._id)}
-                    onChange={() => handleRowSelection(row._id)}
+    <div style={{ padding: "20px" }}>
+      {loading ? (
+        <CircularProgress />
+      ) : error ? (
+        <Alert severity="error">{error}</Alert>
+      ) : (
+        <TableContainer
+          component={Paper}
+          sx={{ overflowX: "auto", maxHeight: { xs: 400, md: "auto" } }}
+        >
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow sx={{position: 'sticky', top: 0}}>
+                <StyledTableCell>
+                  <Checkbox
+                    onChange={handleSelectAll}
+                    checked={selectedRows.length === data.length && data.length > 0}
+                    disableRipple
+                    disableFocusRipple
                   />
-                </td>
-                <td>{row.companyName || "N/A"}</td>
-                <td>{row.jobTitle || "N/A"}</td>
-                <td>{row.numberOfPosition || "N/A"}</td>
+                </StyledTableCell>
+                <StyledTableCell>Company Name</StyledTableCell>
+                <StyledTableCell>Job Title</StyledTableCell>
+                <StyledTableCell>Number of Positions</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.length > 0 ? (
+                data.map((row) => (
+                  <StyledTableRow key={row._id}>
+                    <StyledTableCell>
+                      <Checkbox
+                        checked={selectedRows.includes(row._id)}
+                        onChange={() => handleRowSelection(row._id)}
+                        disableRipple
+                        disableFocusRipple
+                      />
+                    </StyledTableCell>
+                    <StyledTableCell>{row.companyName || "N/A"}</StyledTableCell>
+                    <StyledTableCell>{row.jobTitle || "N/A"}</StyledTableCell>
+                    <StyledTableCell>{row.numberOfPosition || "N/A"}</StyledTableCell>
+                  </StyledTableRow>
+                ))
+              ) : (
+                <StyledTableRow>
+                  <StyledTableCell colSpan="4" style={{ textAlign: "center" }}>
+                    No data available
+                  </StyledTableCell>
+                </StyledTableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" style={{ textAlign: "center" }}>
-                No data available
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-      <button onClick={handleSend} style={{ marginTop: "20px" }}>
+      <Button
+        sx={{
+          position: "sticky",
+          bottom: "20px",
+          zIndex: 1,
+          left: { xs: "10px", md: "30px" },
+          mt: 2,
+        }}
+        variant="contained"
+        color="success"
+        onClick={handleSend}
+        disabled={selectedRows.length === 0}
+      >
         Send via WhatsApp
-      </button>
+      </Button>
     </div>
   );
 };
