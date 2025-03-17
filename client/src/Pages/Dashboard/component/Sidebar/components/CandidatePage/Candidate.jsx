@@ -12,7 +12,6 @@ import {
   CircularProgress,
   Grid,
 } from "@mui/material";
-
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
 import Btn from "../../../Button/Btnn";
 import { NotFound } from "../../../../../../../utils/Error";

@@ -174,18 +174,4 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
         </StyledTableRow >
     );
 };
-
-User.propTypes = {
-    count: PropTypes.number.isRequired,
-    fullname: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    position: PropTypes.string.isRequired,
-    dob: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-    gender: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    updateUser: PropTypes.func.isRequired,
-    _id: PropTypes.string.isRequired,
-};
-
 export default User;
