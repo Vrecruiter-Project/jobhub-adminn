@@ -14,6 +14,7 @@ import {
   styled,
   tableCellClasses,
   CircularProgress,
+  Button,
 } from "@mui/material";
 import * as XLSX from "xlsx";
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
@@ -23,7 +24,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { NotFound } from "../../../../../../../utils/Error";
 import Addjob from "../../../../../Form/Addjob";
 import BasicModal from "../../../Model/Model";
-
+import { Modal, Typography } from "@mui/material";
+import CandidateModal from "../../../../../Form/AppliedCandidate";
 // Utility function to capitalize first letter of each word
 const capitalizeWords = (str) => {
   return str
@@ -56,20 +58,69 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
   },
 }));
+const Job = ({ count, jobTitle, jobRole, numberOfPosition, companyName, jobLocation, experience, salary, english, students }) => {
+  const [isEnroll, setIsEnroll] = useState(students);
+  const [openModal, setOpenModal] = useState(false); // State to control modal visibility
+  const [selectedItem, setSelectedItem] = useState(null); // State to track selected item
 
-const Job = ({ count, jobTitle, jobRole, numberOfPosition, companyName, jobLocation, experience, salary, english }) => (
-  <StyledTableRow>
-    <StyledTableCell>{count}</StyledTableCell>
-    <StyledTableCell>{capitalizeWords(jobTitle)}</StyledTableCell>
-    <StyledTableCell>{capitalizeWords(jobRole)}</StyledTableCell>
-    <StyledTableCell>{numberOfPosition}</StyledTableCell>
-    <StyledTableCell>{capitalizeWords(companyName)}</StyledTableCell>
-    <StyledTableCell>{capitalizeWords(jobLocation)}</StyledTableCell>
-    <StyledTableCell>{capitalizeWords(experience)}</StyledTableCell>
-    <StyledTableCell>{salary}</StyledTableCell>
-    <StyledTableCell>{capitalizeWords(english)}</StyledTableCell>
-  </StyledTableRow>
-);
+  // Function to handle opening the modal
+  const handleOpenModal = (item) => {
+    setSelectedItem(item); // Set the selected item
+    setOpenModal(true); // Open the modal
+  };
+
+  // Function to handle closing the modal
+  const handleCloseModal = () => {
+    setOpenModal(false); // Close the modal
+    setSelectedItem(null); // Clear the selected item
+  };
+
+  return (
+    <>
+      <StyledTableRow>
+        <StyledTableCell>{count}</StyledTableCell>
+        <StyledTableCell>{capitalizeWords(jobTitle)}</StyledTableCell>
+        <StyledTableCell>{capitalizeWords(jobRole)}</StyledTableCell>
+        <StyledTableCell>{numberOfPosition}</StyledTableCell>
+        <StyledTableCell>{capitalizeWords(companyName)}</StyledTableCell>
+        <StyledTableCell>{capitalizeWords(jobLocation)}</StyledTableCell>
+        <StyledTableCell>{capitalizeWords(experience)}</StyledTableCell>
+        <StyledTableCell>{salary}</StyledTableCell>
+        <StyledTableCell>{capitalizeWords(english)}</StyledTableCell>
+        <StyledTableCell>
+          <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small">
+            Edit
+          </Button>
+        </StyledTableCell>
+        <StyledTableCell>
+          <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small">
+            Delete
+          </Button>
+        </StyledTableCell>
+        <StyledTableCell>
+          {isEnroll.length === 0 ? "No data" :
+            isEnroll.map((item, index) => (
+            <Button
+              key={index}
+              variant="contained"
+              style={{ backgroundColor: "#4caf50", margin: "2px" }}
+              size="small"
+              onClick={() => handleOpenModal(item)} // Open modal on button click
+            >
+              Applied
+            </Button>
+          ))}
+        </StyledTableCell>
+      </StyledTableRow>
+
+      <CandidateModal
+        open={openModal}
+        onClose={handleCloseModal}
+        selectedItem={selectedItem}
+      />
+    </>
+  );
+};
 
 Job.propTypes = {
   count: PropTypes.number.isRequired,
@@ -81,6 +132,7 @@ Job.propTypes = {
   experience: PropTypes.string.isRequired,
   salary: PropTypes.string.isRequired,
   english: PropTypes.string.isRequired,
+  students:PropTypes.string.isRequired,
 };
 
 const JobsPage = () => {
@@ -178,6 +230,9 @@ const JobsPage = () => {
               <StyledTableCell>Experience</StyledTableCell>
               <StyledTableCell>Salary</StyledTableCell>
               <StyledTableCell>English</StyledTableCell>
+              <StyledTableCell>Edit</StyledTableCell>
+              <StyledTableCell>Delete</StyledTableCell>
+              <StyledTableCell>Applied Candidate</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -18,15 +18,37 @@ import JobsPage from './components/JobsPage/Jobspage';
 import CandidatePage from './components/CandidatePage/Candidate';
 import useOnline from '../../../../../utils/useOnline';
 import { OffLine } from '../../../../../utils/Error';
-
+import PersonIcon from '@mui/icons-material/Person';
+import Groups2Icon from '@mui/icons-material/Groups2';
+import InterestedCandidate from './components/CandidatePage/util/Intrestedcandidate';
 // Navigation Configuration
 const NAVIGATION = [
   { kind: 'header', title: 'Overview' },
   { segment: 'dashboard', title: 'DASHBOARD', icon: <DashboardIcon /> },
   { segment: 'company', title: 'COMPANY', icon: <BusinessIcon /> },
   { segment: 'jobs', title: 'JOBS', icon: <WorkIcon /> },
-  { segment: 'candidate', title: 'CANDIDATE', icon: <HailIcon /> },
-  { segment: 'logout', title: 'Logout', icon: <LogoutIcon /> },
+  {
+    segment: 'candidate', title: 'CANDIDATE', icon: <HailIcon />,
+    children: [
+      {
+        segment: 'allCandidates',
+        title: 'All Candidates',
+        icon: <Groups2Icon />,
+        path: '/candidate/allCandidates',
+      },
+      {
+        segment: 'interestedCandidate',
+        title: 'Interested Candidates',
+        icon: <PersonIcon />,
+        path: '/candidate/interestedCandidate',
+      }
+    ]
+  },
+  {
+    segment: 'logout', title: 'Logout', icon: <LogoutIcon />,
+    
+    
+  },
 ];
 
 // Theme Configuration
@@ -37,8 +59,12 @@ const demoTheme = createTheme({
 });
 
 // Utility Function to Check Active Segment
-const isActive = (pathname, segment) => pathname === `/${segment}`;
-
+const isActive = (pathname, segment) => {
+  if (segment === 'candidate') {
+    return pathname.startsWith('/candidate');
+  }
+  return pathname === `/${segment}`;
+};
 // Main Component
 function AppProviderBasic() {
   const router = useDemoRouter('/dashboard');
@@ -54,6 +80,10 @@ function AppProviderBasic() {
         return <JobsPage />;
       case '/candidate':
         return <CandidatePage />;
+      case '/candidate/allCandidates':
+        return <CandidatePage />; 
+      case '/candidate/interestedCandidate':
+        return <InterestedCandidate />; 
       default:
         return <DashboardPage />;
     }
@@ -84,7 +114,7 @@ function AppProviderBasic() {
       return {
         ...item,
         icon: React.cloneElement(item.icon, {
-          onClick: () => handleLogout(), // Trigger the logout function
+          onClick: () => handleLogout(),
         }),
         title: (
           <div
@@ -96,7 +126,7 @@ function AppProviderBasic() {
         ),
       };
     }
-
+  
     if (item.segment) {
       return {
         ...item,
@@ -105,7 +135,19 @@ function AppProviderBasic() {
         }),
       };
     }
-
+  
+    if (item.children) {
+      return {
+        ...item,
+        children: item.children.map((child) => ({
+          ...child,
+          icon: React.cloneElement(child.icon, {
+            style: { color: isActive(router.pathname, child.segment) ? 'green' : 'inherit' },
+          }),
+        })),
+      };
+    }
+  
     return item;
   });
 
@@ -120,8 +162,8 @@ function AppProviderBasic() {
       router={router}
       theme={demoTheme}
       branding={{
-        title: <Typography className="text-2xl">JOB HUB <sup>admin</sup></Typography>,
-        logo: <img className='logo' src={Logo} alt="job-hub" />,
+        title: <div className='text-green-400'>JOB HUB <sup className='text-green-300' style={{fontSize:'10px'}}>admin</sup></div>,
+        logo: <img className='w-10' src={Logo} alt="job-hub" />,
       }}
     >
       <DashboardLayout>

@@ -7,25 +7,47 @@ import {
     DialogContent,
     DialogTitle,
     TextField,
+    Checkbox,
+    FormControlLabel,
 } from "@mui/material";
 
 import { StyledTableCell, StyledTableRow } from "./StyledComponents";
 import { capitalizeWords } from "./CapitalWord";
-import { Checkbox, FormControlLabel } from '@mui/material';
 import BasicModal from "../../../../Model/Model";
 import Assigncomp from "../../../../../../Form/Assigncomp";
+import Modal from "../../CompanyPage/Component/Commodel";
+import ShowCandidateInfo from "../../../../../../Form/FullcadidateInfo";
 
-const User = ({ count, fullname, email, position, dob, number, gender, address, updateUser, enrollment, remark, _id, createdAt }) => {
+const User = ({
+    count,
+    fullname,
+    email,
+    position,
+    dob,
+    number,
+    gender,
+    address,
+    updateUser,
+    enrollment,
+    remark,
+    _id,
+    createdAt,
+}) => {
+    // Format date of birth (dob)
     let formattedDob = "";
     if (dob) {
-        formattedDob = new Date(dob).toISOString().split('T')[0];
-    }
-    let walkindate = "";
-    if (createdAt) {
-        walkindate = new Date(createdAt).toISOString().split('T')[0];
+        formattedDob = new Date(dob).toISOString().split("T")[0];
     }
 
+    // Format walk-in date (createdAt)
+    let walkindate = "";
+    if (createdAt) {
+        walkindate = new Date(createdAt).toISOString().split("T")[0];
+    }
+
+    // State for modals and selected user data
     const [openModal, setOpenModal] = useState(false);
+    const [jobModal, setJobModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState({
         _id,
         count,
@@ -36,64 +58,92 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
         gender,
         remark: remark || "",
         address,
-        enrollment: enrollment || "",
-        createdAt
-
+        enrollment: enrollment || false,
+        createdAt,
     });
 
+    // Handlers for modals
+    const handleAssignClick = () => {
+        setJobModal(true);
+    };
 
+    const handleClose = () => {
+        setJobModal(false);
+    };
 
     const handleEditClick = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
-    const handleSave = async () => {
-        await updateUser(selectedUser);
+
+    // Save handler for updating user data
+    const handleSave = () => {
+        updateUser(selectedUser);
         setOpenModal(false);
     };
 
+    // Input change handler
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, checked, type } = e.target;
         setSelectedUser((prevUser) => ({
             ...prevUser,
-            [name]: value,
+            [name]: type === "checkbox" ? checked : value,
         }));
     };
 
     return (
-        <StyledTableRow key={_id}>
-            <StyledTableCell>{count}</StyledTableCell>
-            <StyledTableCell>{capitalizeWords(fullname)}</StyledTableCell>
-            <StyledTableCell>{email}</StyledTableCell>
-            <StyledTableCell>{capitalizeWords(position)}</StyledTableCell>
-            <StyledTableCell>{formattedDob}</StyledTableCell>
-            <StyledTableCell>{number}</StyledTableCell>
-            <StyledTableCell>{capitalizeWords(gender)}</StyledTableCell>
-            <StyledTableCell>{walkindate}</StyledTableCell>
-            <StyledTableCell>{capitalizeWords(address)}</StyledTableCell>
-            <StyledTableCell>{enrollment ? '✅' : '❌'}</StyledTableCell>
-            <StyledTableCell>{remark ? capitalizeWords(remark) : "📃"}</StyledTableCell>
-            <StyledTableCell>
-                <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small"
-                    onClick={handleEditClick}>
-                    Edit
-                </Button>
-            </StyledTableCell>
-            {enrollment ? < StyledTableCell >
-                <BasicModal form={<Assigncomp number={number} />} btn={<Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small">
-                    Assign
-                </Button>} btnStyle={{ backgroundColor: "#4caf50" }} />
-            </StyledTableCell> : null}
+        <>
+            <StyledTableRow key={_id} sx={{ cursor: "pointer" }}>
+                <StyledTableCell onClick={handleAssignClick}>{count}</StyledTableCell>
+                <StyledTableCell onClick={handleAssignClick}>{capitalizeWords(fullname)}</StyledTableCell>
+                <StyledTableCell onClick={handleAssignClick}>{email}</StyledTableCell>
+                <StyledTableCell onClick={handleAssignClick}>{capitalizeWords(position)}</StyledTableCell>
+                <StyledTableCell onClick={handleAssignClick}>{formattedDob}</StyledTableCell>
+                <StyledTableCell onClick={handleAssignClick}>{number}</StyledTableCell>
+                <StyledTableCell onClick={handleAssignClick}>{capitalizeWords(gender)}</StyledTableCell>
+                <StyledTableCell onClick={handleAssignClick}>{walkindate}</StyledTableCell>
+                <StyledTableCell onClick={handleAssignClick}>{capitalizeWords(address)}</StyledTableCell>
+                <StyledTableCell>{enrollment ? "✅" : "❌"}</StyledTableCell>
+                <StyledTableCell>{remark ? capitalizeWords(remark) : "📃"}</StyledTableCell>
+                <StyledTableCell>
+                    <Button
+                        variant="contained"
+                        style={{ backgroundColor: "#4caf50" }}
+                        size="small"
+                        onClick={handleEditClick}
+                    >
+                        Edit
+                    </Button>
+                </StyledTableCell>
+                {enrollment && (
+                    <StyledTableCell>
+                        <BasicModal
+                            form={<Assigncomp number={number} />}
+                            btn={
+                                <Button
+                                    variant="contained"
+                                    style={{ backgroundColor: "#4caf50" }}
+                                    size="small"
+                                >
+                                    Assign
+                                </Button>
+                            }
+                            btnStyle={{ backgroundColor: "#4caf50" }}
+                        />
+                    </StyledTableCell>
+                )}
+            </StyledTableRow>
 
-
-            {/* Dialog for Edit Button */}
+            {/* Edit Candidate Dialog */}
             <Dialog open={openModal} onClose={handleCloseModal}>
-                <DialogTitle sx={{ fontSize: '30px' }}>Edit Candidate</DialogTitle>
+                <DialogTitle sx={{ fontSize: "30px" }}>Edit Candidate</DialogTitle>
                 <DialogContent>
                     <FormControlLabel
-                        sx={{ float: 'right' }}
+                        sx={{ float: "right" }}
                         control={
                             <Checkbox
                                 checked={selectedUser.enrollment}
-                                onChange={(e) => handleChange({ target: { name: 'enrollment', value: e.target.checked } })}
+                                onChange={(e) =>
+                                    handleChange({ target: { name: "enrollment", value: e.target.checked } })
+                                }
                             />
                         }
                         label="Enrollment"
@@ -171,7 +221,29 @@ const User = ({ count, fullname, email, position, dob, number, gender, address, 
                     </Button>
                 </DialogActions>
             </Dialog>
-        </StyledTableRow >
+
+            {/* Candidate Info Modal */}
+            <Modal title={"Candidate Info"} isOpen={jobModal} onClose={handleClose}>
+                <ShowCandidateInfo canID={_id} />
+            </Modal>
+        </>
     );
 };
+
+User.propTypes = {
+    count: PropTypes.number.isRequired,
+    fullname: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    position: PropTypes.string.isRequired,
+    dob: PropTypes.string,
+    number: PropTypes.string.isRequired,
+    gender: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    updateUser: PropTypes.func.isRequired,
+    enrollment: PropTypes.bool,
+    remark: PropTypes.string,
+    _id: PropTypes.string.isRequired,
+    createdAt: PropTypes.string,
+};
+
 export default User;
