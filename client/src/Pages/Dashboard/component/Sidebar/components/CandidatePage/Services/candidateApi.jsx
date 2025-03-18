@@ -12,6 +12,7 @@ export const updateCandidate = async (updatedUser) => {
         });
 
         if (!response.ok) {
+            alert("Add Remark to candidate");
             throw new Error("Failed to update user");
         }
 
