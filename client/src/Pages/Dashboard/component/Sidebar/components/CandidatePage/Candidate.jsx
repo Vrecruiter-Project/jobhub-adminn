@@ -29,7 +29,7 @@ const CandidateData = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [showNewData, setShowNewData] = useState(true);
-
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     const getUserInfo = async () => {
       try {
@@ -45,7 +45,12 @@ const CandidateData = () => {
       }
     };
     getUserInfo();
-  }, []);
+  }, [reload]);
+
+  const handleRefresh = () => {
+    setReload(prev => !prev);
+  };
+
   const updateUser = async (updatedUser) => {
     try {
       const updatedData = await updateCandidate(updatedUser); // Use the imported function
@@ -54,9 +59,10 @@ const CandidateData = () => {
       );
     } catch (error) {
       console.error(error);
-      alert("Failed to update user, please try again.");
+      alert("Please filled Remark to User !");
     }
   };
+  
   const toggleDataView = () => {
     setShowNewData((prev) => !prev);
   };
@@ -91,6 +97,7 @@ const CandidateData = () => {
             }}
           />
           <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
+          <Btn variant="contained" text={"Refresh Data"} click={handleRefresh}/>
         </Grid>
         <Grid item xs={12} md={6} style={{ display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
           <BasicModal btn={<Btn text="Add Data" />} form={<RegistrationPage />} />
