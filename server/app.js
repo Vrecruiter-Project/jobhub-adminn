@@ -27,7 +27,6 @@ app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
     return res.sendStatus(200);
   }
-
   next();
 });
 
@@ -36,7 +35,9 @@ app.use(express.static("public"));
 
 // Routes
 const adminRoute = require("./src/routes/admin.route");
-app.use("/api/admin", adminRoute);
+const hrRoute = require("./src/routes/hr.route");
 
+app.use("/api/admin", adminRoute);
+app.use("/api/hr", hrRoute);
 
 module.exports = app;

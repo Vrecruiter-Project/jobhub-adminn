@@ -24,8 +24,13 @@ const ProtectedRoute = () => {
     checkAuth();
   }, []);
 
-  if (auth === null) return <DotsLoader/>;
+  if (auth === null) return <DotsLoader />;
   return auth ? <Outlet /> : <Navigate to="/" replace />;
 };
 
-export default ProtectedRoute;
+const HrProtectedRoute = ({ isAuthenticated, children }) => {
+  return isAuthenticated ? children : <Navigate to="/" />;
+};
+
+
+export { ProtectedRoute, HrProtectedRoute };

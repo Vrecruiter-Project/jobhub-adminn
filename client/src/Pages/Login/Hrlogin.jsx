@@ -1,35 +1,29 @@
-import { useState } from "react";
+import { useState  } from "react";
 import { BASE_URL } from "../../api/api";
 import { Link, useNavigate } from "react-router-dom";
 import bg from "../../assets/signin.jpg"
 
-const Hrlogin = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+import authService from '../Login/authService';
+
+const Hrlogin = ({ onLogin }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
-      const res = await fetch(`${BASE_URL}/api/hr/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        navigate("/dashboard");
-      } else {
-        alert(data.message);
+      const response = await authService.login(username, password);
+      if (response.status === 200) {
+        onLogin();
+        navigate('/hrdashboard');
       }
-    } catch (error) {
-      alert("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      setError('Invalid credentials');
     }
   };
 
@@ -46,14 +40,20 @@ const Hrlogin = () => {
         <div className="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5">
           <div className="flex items-center justify-center w-full lg:p-12">
             <div className="flex items-center xl:p-10">
-              <form onSubmit={handleLogin} className="flex flex-col w-full h-full pb-6 text-center bg-white p-6  rounded-3xl">
-                <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">Admin Sign In</h3>
+              <form onSubmit={handleSubmit} className="flex flex-col w-full h-full pb-6 text-center bg-white p-6  rounded-3xl">
+              {error && <p className="text-red-500 mb-4">{error}</p>}
+                <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">Hr Sign In</h3>
                 <label htmlFor="email" className="mb-2 mt-8 text-sm text-start text-grey-900">username*</label>
-                <input value={username}
-                  onChange={(e) => setUsername(e.target.value)} placeholder="Enter a username" className="bg-amber-100 flex items-center w-full px-5 py-4 mb-7 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl" />
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter a username" className="bg-amber-100 flex items-center w-full px-5 py-4 mb-7 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl" />
                 <label htmlFor="password" className="mb-2 text-sm text-start text-grey-900">Password*</label>
-                <input value={password}
-                  onChange={(e) => setPassword(e.target.value)} id="password" type="password" placeholder="Enter your password" className="bg-amber-100 flex items-center w-full px-5 py-4 mb-5 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl" />
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+
+                  id="password" type="password" placeholder="Enter your password" className="bg-amber-100 flex items-center w-full px-5 py-4 mb-5 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl" />
                 <button disabled={loading} className="w-full flex items-center bg-green-400  px-5 py-4 mt-5 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl text-center justify-center md:w-96 cursor-pointer "> {loading ? "Signing in..." : "Sign In"}</button>
                 <Link
                   className="text-end text-1xl font-medium mt-7 text-gray-600 hover:text-green-500 "
@@ -73,3 +73,36 @@ const Hrlogin = () => {
 };
 
 export default Hrlogin;
+
+
+
+
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center">
+//       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-96">
+//         <h2 className="text-2xl mb-4">Login</h2>
+//         {error && <p className="text-red-500 mb-4">{error}</p>}
+//         <input
+//           type="text"
+//           placeholder="Username"
+//           value={username}
+//           onChange={(e) => setUsername(e.target.value)}
+//           className="border p-2 w-full mb-4"
+//           required
+//         />
+//         <input
+//           type="password"
+//           placeholder="Password"
+//           value={password}
+//           onChange={(e) => setPassword(e.target.value)}
+//           className="border p-2 w-full mb-4"
+//           required
+//         />
+//         <button type="submit" className="bg-blue-500 text-white p-2 w-full rounded-lg">Login</button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default Hrlogin;
