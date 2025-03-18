@@ -7,7 +7,7 @@ export const JOBHUB_BASE_URL = "https://jobhub-project-official-1.onrender.com/a
 //
 //
 //this is local url
-//export const BASE_URL = "http://localhost:3000";
+//export const JOBHUB_BASE_URL = "http://localhost:9000";
 //
 //
 //Get Canditate api
