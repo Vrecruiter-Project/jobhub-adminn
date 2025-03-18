@@ -12,7 +12,7 @@ export const updateCandidate = async (updatedUser) => {
         });
 
         if (!response.ok) {
-            alert("Add Remark to candidate");
+            alert("fill all the fields");
             // throw new Error("Failed to update user");
         }
 
@@ -20,7 +20,7 @@ export const updateCandidate = async (updatedUser) => {
         return updatedData; // Return the updated data
     } catch (error) {
         console.error(error);
-        throw error; // Re-throw the error for handling in the component
+        throw error;
     }
 };
 

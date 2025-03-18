@@ -3,20 +3,20 @@ import { BASE_URL } from "../../api/api";
 import { Link, useNavigate } from "react-router-dom";
 import bg from "../../assets/signin.jpg"
 
-const Adminlogin = () => {
+const Hrlogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/login`, {
+      const res = await fetch(`${BASE_URL}/api/hr/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
 
@@ -32,6 +32,7 @@ const Adminlogin = () => {
       setLoading(false);
     }
   };
+
   return (
     <div style={{
       backgroundImage: `url(${bg})`,
@@ -56,17 +57,19 @@ const Adminlogin = () => {
                 <button disabled={loading} className="w-full flex items-center bg-green-400  px-5 py-4 mt-5 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl text-center justify-center md:w-96 cursor-pointer "> {loading ? "Signing in..." : "Sign In"}</button>
                 <Link
                   className="text-end text-1xl font-medium mt-7 text-gray-600 hover:text-green-500 "
-                  to="/hrlogin"
+                  to="/"
                 >
-                  👉 Log in as HR
+                  👉 Go back
                 </Link>
               </form>
             </div>
           </div>
         </div>
       </div>
+
     </div>
+
   );
 };
 
-export default Adminlogin;
+export default Hrlogin;

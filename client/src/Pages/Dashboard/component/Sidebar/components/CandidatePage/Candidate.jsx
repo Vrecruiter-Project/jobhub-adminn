@@ -53,7 +53,7 @@ const CandidateData = () => {
 
   const updateUser = async (updatedUser) => {
     try {
-      const updatedData = await updateCandidate(updatedUser); // Use the imported function
+      const updatedData = await updateCandidate(updatedUser); 
       setUserInfo((prevData) =>
         prevData.map((user) => (user._id === updatedUser._id ? updatedData : user))
       );
