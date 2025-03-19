@@ -35,7 +35,7 @@ const Assigncomp = ({ number }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-    const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,7 +88,8 @@ const Assigncomp = ({ number }) => {
     const message = selectedData
       .map(
         (row, index) =>
-          `${index + 1}. Company: ${row.companyName || "N/A"}\n   Job Title: ${row.jobTitle || "N/A"}\n   Positions: ${row.numberOfPosition || "N/A"}`
+          `${index + 1}. Company: ${row.companyName || "N/A"}\n   Job Title: ${row.jobTitle || "N/A"}\n  
+            Job Role: ${row.jobRole || "N/A"}\n   Job Location: ${row.jobLocation || "N/A"}\n }\n}`
       )
       .join("\n\n");
 
@@ -103,7 +104,7 @@ const Assigncomp = ({ number }) => {
         value.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-      return filteredData
+    return filteredData
   }, [searchTerm, data]
   );
 
@@ -119,8 +120,8 @@ const Assigncomp = ({ number }) => {
           sx={{ overflowX: "auto", maxHeight: { xs: 400, md: "auto" } }}
         >
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-              <TableRow sx={{position: 'sticky', top: 0}}>
+            <TableHead>
+              <TableRow sx={{ position: 'sticky', top: 0 }}>
                 <StyledTableCell>
                   <Checkbox
                     onChange={handleSelectAll}
@@ -162,32 +163,32 @@ const Assigncomp = ({ number }) => {
           </Table>
         </TableContainer>
       )}
-      <Box sx={{display:'flex',gap:'30px', alignItems:"center", mt:'10px'}}>
+      <Box sx={{ display: 'flex', gap: '30px', alignItems: "center", mt: '10px' }}>
 
-      
-      <Button
-        sx={{
-          position: "sticky",
-          bottom: "20px",
-          zIndex: 1,
-          left: { xs: "10px", md: "30px" },
-        }}
-        variant="contained"
-        color="success"
-        onClick={handleSend}
-        disabled={selectedRows.length === 0}
-      >
-        Send via WhatsApp
-      </Button>
-      <TextField
+
+        <Button
+          sx={{
+            position: "sticky",
+            bottom: "20px",
+            zIndex: 1,
+            left: { xs: "10px", md: "30px" },
+          }}
+          variant="contained"
+          color="success"
+          onClick={handleSend}
+          disabled={selectedRows.length === 0}
+        >
+          Send via WhatsApp
+        </Button>
+        <TextField
           label="Search"
           variant="outlined"
           size="small"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-                      sx={{ width: "300px" }}
+          sx={{ width: "300px" }}
         />
-        </Box>
+      </Box>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState  } from "react";
+import { useState } from "react";
 import { BASE_URL } from "../../api/api";
 import { Link, useNavigate } from "react-router-dom";
 import bg from "../../assets/signin.jpg";
@@ -19,6 +19,7 @@ const Hrlogin = ({ onLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await login(username, password);
       if (response.status === 200) {
@@ -27,6 +28,9 @@ const Hrlogin = ({ onLogin }) => {
       }
     } catch (err) {
       setError('Invalid credentials');
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +48,7 @@ const Hrlogin = ({ onLogin }) => {
           <div className="flex items-center justify-center w-full lg:p-12">
             <div className="flex items-center xl:p-10">
               <form onSubmit={handleSubmit} className="flex flex-col w-full h-full pb-6 text-center bg-white p-6  rounded-3xl">
-              {error && <p className="text-red-500 mb-4">{error}</p>}
+                {error && <p className="text-red-500 mb-4">{error}</p>}
                 <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">Hr Sign In</h3>
                 <label htmlFor="email" className="mb-2 mt-8 text-sm text-start text-grey-900">username*</label>
                 <input

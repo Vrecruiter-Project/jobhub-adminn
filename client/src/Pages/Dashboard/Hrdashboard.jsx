@@ -8,7 +8,6 @@ import JobsPage from '../Dashboard/component/Sidebar/components/JobsPage/Jobspag
 import CandidateData from './component/Sidebar/components/CandidatePage/Candidate'; 
 import React from 'react';
 import Logo from '/log.svg'
-//import { isActive } from '../Dashboard/component/Sidebar/Sidebar';
 
 const Navigation = [
     { kind: 'header', title: 'Hr Overview' },

@@ -7,6 +7,8 @@ const Adminlogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ const Adminlogin = () => {
         alert(data.message);
       }
     } catch (error) {
-      alert("An error occurred. Please try again.");
+      setError('Invalid credentials');
     } finally {
       setLoading(false);
     }
@@ -46,6 +48,10 @@ const Adminlogin = () => {
           <div className="flex items-center justify-center w-full lg:p-12">
             <div className="flex items-center xl:p-10">
               <form onSubmit={handleLogin} className="flex flex-col w-full h-full pb-6 text-center bg-white p-6  rounded-3xl">
+
+
+                {error && <p className="text-red-500 mb-4">{error}</p>}
+
                 <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">Admin Sign In</h3>
                 <label htmlFor="email" className="mb-2 mt-8 text-sm text-start text-grey-900">username*</label>
                 <input value={username}
