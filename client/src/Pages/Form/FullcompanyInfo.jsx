@@ -71,19 +71,6 @@ const Cards = ({
                         {salary} monthly
                     </div>
                 </div>
-                <div className='potinatial'>
-                    <div className='potin'>
-                        
-                        Fixed :
-                        <CurrencyRupeeIcon sx={{ width: '20px', height: '20px' }} />12k-13k
-                        
-                    </div>
-                    <div className='potin-1'>
-                        
-                        Earning Potential:<CurrencyRupeeIcon sx={{ width: '20px', height: '20px' }} />14k
-                        
-                    </div>
-                </div>
                 <div className='workType'>
                     <div>
                         <BusinessOutlined sx={{width:'18px'}} /> {workType}
@@ -102,7 +89,7 @@ const Cards = ({
                 <div className='jobHighlight'>
                     Job highlights
                     <div className='avia-1'>
-                        <People /> {numberOfPosition} applicants
+                        <People /> {numberOfPosition} Candidates
                         <div className='interviwe'>
                             InterviewMode:
                             <div className='mode'>{interviewMode}</div>
