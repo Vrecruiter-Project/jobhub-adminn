@@ -95,7 +95,9 @@ const Assigncomp = ({ number }) => {
 
     const phoneNumber = `91${number}`;
 
-    sendMessage(phoneNumber, `Here are the selected job details:\n\n${message}`);
+    const customMessage = `Here are the selected job details:\n\n${message}\n\nThank you for using our services at V Recruiters. We wish you all the best for your interviews and future endeavors !`;
+
+    sendMessage(phoneNumber, customMessage);
   };
 
   const filteredUsers = useMemo(() => {
