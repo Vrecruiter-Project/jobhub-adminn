@@ -2,8 +2,8 @@ const bcrypt = require("bcryptjs");
 // const dotenv = require("dotenv");
 // dotenv.config();
 
-const adminUsername = "Manjeet";
-const adminPassword = "Saharan@94";
+const adminUsername = "vr-admin";
+const adminPassword = "updateadmin";
 
 // Hash password before exporting
 const hashedPassword = bcrypt.hashSync(adminPassword, 10);
