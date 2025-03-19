@@ -107,7 +107,7 @@ const Job = ({ count, jobTitle, jobRole, numberOfPosition, companyName, jobLocat
               size="small"
               onClick={() => handleOpenModal(item)} // Open modal on button click
             >
-              Applied
+              See
             </Button>
           ))}
         </StyledTableCell>
@@ -232,7 +232,7 @@ const JobsPage = () => {
               <StyledTableCell>English</StyledTableCell>
               <StyledTableCell>Edit</StyledTableCell>
               <StyledTableCell>Delete</StyledTableCell>
-              <StyledTableCell>Applied Candidate</StyledTableCell>
+              <StyledTableCell>Applicants</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

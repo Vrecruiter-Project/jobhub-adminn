@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,6 +11,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import { TextField } from "@mui/material";
+import { Box } from "@mui/system";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,6 +35,7 @@ const Assigncomp = ({ number }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,6 +97,16 @@ const Assigncomp = ({ number }) => {
     sendMessage(phoneNumber, `Here are the selected job details:\n\n${message}`);
   };
 
+  const filteredUsers = useMemo(() => {
+    let filteredData = data.filter((user) =>
+      Object.values(user).some((value) =>
+        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+      return filteredData
+  }, [searchTerm, data]
+  );
+
   return (
     <div style={{ padding: "20px" }}>
       {loading ? (
@@ -106,7 +119,7 @@ const Assigncomp = ({ number }) => {
           sx={{ overflowX: "auto", maxHeight: { xs: 400, md: "auto" } }}
         >
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
+                <TableHead>
               <TableRow sx={{position: 'sticky', top: 0}}>
                 <StyledTableCell>
                   <Checkbox
@@ -122,8 +135,8 @@ const Assigncomp = ({ number }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.length > 0 ? (
-                data.map((row) => (
+              {filteredUsers.length > 0 ? (
+                filteredUsers.map((row) => (
                   <StyledTableRow key={row._id}>
                     <StyledTableCell>
                       <Checkbox
@@ -149,14 +162,15 @@ const Assigncomp = ({ number }) => {
           </Table>
         </TableContainer>
       )}
+      <Box sx={{display:'flex',gap:'30px', alignItems:"center", mt:'10px'}}>
 
+      
       <Button
         sx={{
           position: "sticky",
           bottom: "20px",
           zIndex: 1,
           left: { xs: "10px", md: "30px" },
-          mt: 2,
         }}
         variant="contained"
         color="success"
@@ -165,6 +179,15 @@ const Assigncomp = ({ number }) => {
       >
         Send via WhatsApp
       </Button>
+      <TextField
+          label="Search"
+          variant="outlined"
+          size="small"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+                      sx={{ width: "300px" }}
+        />
+        </Box>
     </div>
   );
 };

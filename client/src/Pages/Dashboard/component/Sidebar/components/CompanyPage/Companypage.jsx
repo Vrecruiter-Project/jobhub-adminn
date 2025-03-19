@@ -59,7 +59,7 @@ const capitalizeWords = (str) => {
     .join(" ");
 };
 
-const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benefits }) => {
+const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benefits, }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState({
@@ -118,6 +118,7 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
         <StyledTableCell onClick={handleRowClick}>{count}</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{capitalizeWords(companyName)}</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{numberOfPosition}</StyledTableCell>
+        <StyledTableCell>Pending</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{capitalizeWords(jobLocation)}</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{benefits.map(capitalizeWords).join(", ")}</StyledTableCell>
         <StyledTableCell>
@@ -264,6 +265,7 @@ const CompanyPage = () => {
               <StyledTableCell>S_No</StyledTableCell>
               <StyledTableCell>Company Name</StyledTableCell>
               <StyledTableCell>No. of Positions</StyledTableCell>
+              <StyledTableCell>Contact No.</StyledTableCell>
               <StyledTableCell>Location</StyledTableCell>
               <StyledTableCell>Benefits</StyledTableCell>
               <StyledTableCell>Edit</StyledTableCell>
