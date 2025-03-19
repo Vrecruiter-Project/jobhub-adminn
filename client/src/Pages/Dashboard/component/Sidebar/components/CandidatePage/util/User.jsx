@@ -45,6 +45,7 @@ const User = ({
         walkindate = new Date(createdAt).toISOString().split("T")[0];
     }
 
+    const [buttonText, setButtonText] = useState(false);
     // State for modals and selected user data
     const [openModal, setOpenModal] = useState(false);
     const [jobModal, setJobModal] = useState(false);
@@ -62,6 +63,9 @@ const User = ({
         createdAt,
     });
 
+    const handleClick = () => {
+        setButtonText((prev) => !prev);
+    };
     // Handlers for modals
     const handleAssignClick = () => {
         setJobModal(true);
@@ -121,9 +125,9 @@ const User = ({
                                 <Button
                                     variant="contained"
                                     style={{ backgroundColor: "#4caf50" }}
-                                    size="small"
+                                    onClick={handleClick}
                                 >
-                                    Assign
+                                    {buttonText ? "Assigned" : "Assign"}
                                 </Button>
                             }
                             btnStyle={{ backgroundColor: "#4caf50" }}
