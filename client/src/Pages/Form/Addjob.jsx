@@ -44,7 +44,7 @@ const JobForm = () => {
   const experienceLevels = ["Fresher", "1-2 years", "3-5 years", "5+ years"];
   const genders = ["Male", "Female", "Any"];
   const interviewModes = ["Online", "Offline", "Hybrid"];
-  const communicationLevels = ["Basic", "Good", "Excellent"];
+  // const communicationLevels = ["Basic", "Good", "Excellent"];
   const benefitsOptions = [
     "Health Insurance",
     "Paid Time Off",
@@ -101,6 +101,7 @@ const JobForm = () => {
         { label: "Salary", name: "salary", type: "number" },
         { label: "Job Location", name: "jobLocation", type: "text" },
         { label: "Age Requirement", name: "age", type: "number" },
+        { label: "Contact", name: "communication", type: 'number' },
       ].map((field) => (
         <TextField
           key={field.name}
@@ -125,7 +126,7 @@ const JobForm = () => {
         { label: "Experience Level", name: "experience", options: experienceLevels },
         { label: "Gender", name: "gender", options: genders },
         { label: "Interview Mode", name: "interviewMode", options: interviewModes },
-        { label: "Communication Level", name: "communication", options: communicationLevels },
+
       ].map((field) => (
         <FormControl key={field.name} fullWidth margin="normal">
           <InputLabel>{field.label}</InputLabel>
