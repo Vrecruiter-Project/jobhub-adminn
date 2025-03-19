@@ -25,6 +25,7 @@ import Btn from "../../../Button/Btnn";
 import { NotFound } from "../../../../../../../utils/Error";
 import Modal from "./Component/Commodel";
 import ShowCardInfo from "../../../../../Form/FullcompanyInfo";
+import { upCompany } from "./Component/Updatecompany";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -94,16 +95,25 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
       [name]: value,
     }));
   };
-
   const handleSave = () => {
-    // TODO: API call to update the company details
-    console.log("Saving company details:", {
-      ...selectedCompany,
+    const updatedCompany = {
+      _id: selectedCompany._id,
+      companyName: selectedCompany.companyName,
+      numberOfPosition: selectedCompany.numberOfPosition,
+      jobLocation: selectedCompany.jobLocation,
       benefits: selectedCompany.benefits.split(", "),
-    });
-    setIsEditModalOpen(false);
+    };
+  
+    upCompany(updatedCompany)
+      // to check data updated use param { data }
+      .then(() => {
+        console.log("Company updated successfully:");
+        setIsEditModalOpen(false);
+      })
+      .catch((error) => {
+        console.error("Failed to update company:", error);
+      });
   };
-
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
   };
