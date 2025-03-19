@@ -25,6 +25,8 @@ const HrDashboard = () => {
                 return <JobsPage />;
             case '/candidate':
                 return <CandidateData />;
+            case '/logout':
+                return  window.location.href = "/"; 
             default:
                 return null;
         }
@@ -35,7 +37,7 @@ const HrDashboard = () => {
             return {
                 ...item,
                 icon: React.cloneElement(item.icon, {
-                    //style: { color: isActive(router.pathname, item.segment) ? 'green' : 'inherit' },
+                    // style: { color: (router.pathname, item.segment) ? 'green' : 'inherit' },
                 }),
             };
         }
@@ -47,7 +49,7 @@ const HrDashboard = () => {
             navigation={navigationWithActiveIcons}
             router={router}
             branding={{
-                title: <div className='text-green-400'>John <sup className='text-green-300' style={{ fontSize:'10px'}}>HR</sup></div>,
+                title: <div className='text-green-400'>Job Hub <sup className='text-green-300' style={{ fontSize:'10px'}}>HR</sup></div>,
                 logo: <img className='w-10' src={Logo} alt='job hub' />
             }
             }

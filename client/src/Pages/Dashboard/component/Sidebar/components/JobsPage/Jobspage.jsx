@@ -15,6 +15,10 @@ import {
   tableCellClasses,
   CircularProgress,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import * as XLSX from "xlsx";
 import { JOBHUB_BASE_URL } from "../../../../../../api/api";
@@ -26,6 +30,7 @@ import Addjob from "../../../../../Form/Addjob";
 import BasicModal from "../../../Model/Model";
 import { Modal, Typography } from "@mui/material";
 import CandidateModal from "../../../../../Form/AppliedCandidate";
+import { upCompany } from "../CompanyPage/Component/Updatecompany";
 // Utility function to capitalize first letter of each word
 const capitalizeWords = (str) => {
   return str
@@ -58,21 +63,125 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
   },
 }));
-const Job = ({ count, jobTitle, jobRole, numberOfPosition, companyName, jobLocation, experience, salary, english, students }) => {
+const Job = ({
+  count,
+  _id,
+  jobTitle,
+  jobRole,
+  numberOfPosition,
+  companyName,
+  jobLocation,
+  experience,
+  salary,
+  english,
+  students,
+}) => {
   const [isEnroll, setIsEnroll] = useState(students);
   const [openModal, setOpenModal] = useState(false); // State to control modal visibility
   const [selectedItem, setSelectedItem] = useState(null); // State to track selected item
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State to control edit modal visibility
+  const [selectedCompany, setSelectedCompany] = useState({
+    _id: "",
+    count: 0,
+    companyName: "",
+    jobTitle: "",
+    jobRole: "",
+    numberOfPosition: 0,
+    jobType: "",
+    workType: "",
+    ExpireJob: "",
+    benefits: "",
+    salary: "",
+    jobLocation: "",
+    education: "",
+    english: "",
+    experience: "",
+    gender: "",
+    age: "",
+    description: "",
+    interviewMode: "",
+    communication: "",
+  });
 
   // Function to handle opening the modal
   const handleOpenModal = (item) => {
-    setSelectedItem(item); // Set the selected item
-    setOpenModal(true); // Open the modal
+    setSelectedItem(item); 
+    setOpenModal(true); 
   };
 
   // Function to handle closing the modal
   const handleCloseModal = () => {
-    setOpenModal(false); // Close the modal
-    setSelectedItem(null); // Clear the selected item
+    setOpenModal(false); 
+    setSelectedItem(null); 
+  };
+
+  // Function to handle opening the edit modal
+  const handleEditClick = () => {
+    setSelectedCompany({
+      _id,
+      count,
+      companyName,
+      jobTitle,
+      jobRole,
+      numberOfPosition,
+      jobType: "", 
+      workType: "",
+      ExpireJob: "",
+      benefits: "", 
+      salary,
+      jobLocation,
+      education: "", 
+      english,
+      experience,
+      gender: "", 
+      age: "", 
+      description: "", 
+      interviewMode: "", 
+      communication: "", 
+    });
+    setIsEditModalOpen(true);
+  };
+
+  // Function to handle changes in the edit dialog
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSelectedCompany((prevState) => ({
+      ...prevState,
+      [name]: value, 
+    }));
+  };
+
+  // Function to handle saving changes
+const handleSave = () => {
+  const updatedCompany = {
+    _id: selectedCompany._id,
+    jobTitle: selectedCompany.jobTitle,
+    jobRole: selectedCompany.jobRole,
+    numberOfPosition: selectedCompany.numberOfPosition,
+    companyName: selectedCompany.companyName,
+    jobLocation: selectedCompany.jobLocation,
+    experience: selectedCompany.experience,
+    salary: selectedCompany.salary,
+    english: selectedCompany.english,
+    students: selectedCompany.students.benefits.split(", "),
+    benefits: selectedCompany.benefits.benefits.split(", "),
+  };
+  
+    upCompany(updatedCompany)
+      // to check data updated use param { data }
+      .then(() => {
+        console.log("Company updated successfully");
+        alert("Company updated successfully")
+        setIsEditModalOpen(false);
+      })
+      .catch((error) => {
+        console.error("Failed to update company:", error);
+      });
+  };
+
+  // Function to handle closing the edit modal
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   return (
@@ -88,51 +197,152 @@ const Job = ({ count, jobTitle, jobRole, numberOfPosition, companyName, jobLocat
         <StyledTableCell>{salary}</StyledTableCell>
         <StyledTableCell>{capitalizeWords(english)}</StyledTableCell>
         <StyledTableCell>
-          <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small">
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "#4caf50" }}
+            size="small"
+            onClick={handleEditClick} // Open edit modal on button click
+          >
             Edit
           </Button>
         </StyledTableCell>
         <StyledTableCell>
-          <Button variant="contained" style={{ backgroundColor: "#4caf50" }} size="small">
-            Delete
-          </Button>
-        </StyledTableCell>
-        <StyledTableCell>
-          {isEnroll.length === 0 ? "No data" :
+          {isEnroll.length === 0 ? (
+            "No data"
+          ) : (
             isEnroll.map((item, index) => (
-            <Button
-              key={index}
-              variant="contained"
-              style={{ backgroundColor: "#4caf50", margin: "2px" }}
-              size="small"
-              onClick={() => handleOpenModal(item)} // Open modal on button click
-            >
-              See
-            </Button>
-          ))}
+              <Button
+                key={index}
+                variant="contained"
+                style={{ backgroundColor: "#4caf50", margin: "2px" }}
+                size="small"
+                onClick={() => handleOpenModal(item)} // Open modal on button click
+              >
+                See
+              </Button>
+            ))
+          )}
         </StyledTableCell>
       </StyledTableRow>
 
+      {/* Candidate Modal */}
       <CandidateModal
         open={openModal}
         onClose={handleCloseModal}
         selectedItem={selectedItem}
       />
+
+      {/* Edit Company Dialog */}
+      <Dialog open={isEditModalOpen} onClose={handleCloseEditModal}>
+        <DialogTitle sx={{ fontSize: "30px" }}>Edit Job</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Company Name"
+            variant="outlined"
+            fullWidth
+            name="companyName"
+            value={selectedCompany.companyName}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px", marginTop: "13px" }}
+          />
+          <TextField
+            label="Job Title"
+            variant="outlined"
+            fullWidth
+            name="jobTitle"
+            value={selectedCompany.jobTitle}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px" }}
+          />
+          <TextField
+            label="Job Role"
+            variant="outlined"
+            fullWidth
+            name="jobRole"
+            value={selectedCompany.jobRole}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px" }}
+          />
+          <TextField
+            label="Number of Positions"
+            variant="outlined"
+            fullWidth
+            name="numberOfPosition"
+            value={selectedCompany.numberOfPosition}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px" }}
+          />
+          <TextField
+            label="Salary"
+            variant="outlined"
+            fullWidth
+            name="salary"
+            value={selectedCompany.salary}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px" }}
+          />
+          <TextField
+            label="Job Location"
+            variant="outlined"
+            fullWidth
+            name="jobLocation"
+            value={selectedCompany.jobLocation}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px" }}
+          />
+          <TextField
+            label="Experience"
+            variant="outlined"
+            fullWidth
+            name="experience"
+            value={selectedCompany.experience}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px" }}
+          />
+          <TextField
+            label="English Proficiency"
+            variant="outlined"
+            fullWidth
+            name="english"
+            value={selectedCompany.english}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px" }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseEditModal} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleSave} color="secondary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
-
 Job.propTypes = {
+  _id: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
+  companyName: PropTypes.string.isRequired,
   jobTitle: PropTypes.string.isRequired,
   jobRole: PropTypes.string.isRequired,
-  numberOfPosition: PropTypes.string.isRequired,
-  companyName: PropTypes.string.isRequired,
-  jobLocation: PropTypes.string.isRequired,
-  experience: PropTypes.string.isRequired,
+  numberOfPosition: PropTypes.number.isRequired,
+  jobType: PropTypes.string.isRequired,
+  workType: PropTypes.string.isRequired,
+  ExpireJob: PropTypes.string.isRequired,
+  benefits: PropTypes.arrayOf(PropTypes.string).isRequired,
   salary: PropTypes.string.isRequired,
+  jobLocation: PropTypes.string.isRequired,
+  education: PropTypes.string.isRequired,
   english: PropTypes.string.isRequired,
-  students:PropTypes.string.isRequired,
+  experience: PropTypes.string.isRequired,
+  gender: PropTypes.string.isRequired,
+  age: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  interviewMode: PropTypes.string.isRequired,
+  communication: PropTypes.string.isRequired,
+  students: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const JobsPage = () => {
@@ -231,7 +441,6 @@ const JobsPage = () => {
               <StyledTableCell>Salary</StyledTableCell>
               <StyledTableCell>English</StyledTableCell>
               <StyledTableCell>Edit</StyledTableCell>
-              <StyledTableCell>Delete</StyledTableCell>
               <StyledTableCell>Applicants</StyledTableCell>
             </TableRow>
           </TableHead>
