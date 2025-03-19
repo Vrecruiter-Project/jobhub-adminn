@@ -1,9 +1,8 @@
 import { useState  } from "react";
 import { BASE_URL } from "../../api/api";
 import { Link, useNavigate } from "react-router-dom";
-import bg from "../../assets/signin.jpg"
-
-import authService from '../Login/authService';
+import bg from "../../assets/signin.jpg";
+import axios from 'axios';
 
 const Hrlogin = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -14,10 +13,14 @@ const Hrlogin = ({ onLogin }) => {
   const navigate = useNavigate();
 
 
+  const login = (username, password) => {
+    return axios.post(`${BASE_URL}/api/hr/login`, { username, password });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await authService.login(username, password);
+      const response = await login(username, password);
       if (response.status === 200) {
         onLogin();
         navigate('/hrdashboard');
@@ -73,36 +76,3 @@ const Hrlogin = ({ onLogin }) => {
 };
 
 export default Hrlogin;
-
-
-
-
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center">
-//       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-96">
-//         <h2 className="text-2xl mb-4">Login</h2>
-//         {error && <p className="text-red-500 mb-4">{error}</p>}
-//         <input
-//           type="text"
-//           placeholder="Username"
-//           value={username}
-//           onChange={(e) => setUsername(e.target.value)}
-//           className="border p-2 w-full mb-4"
-//           required
-//         />
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           className="border p-2 w-full mb-4"
-//           required
-//         />
-//         <button type="submit" className="bg-blue-500 text-white p-2 w-full rounded-lg">Login</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Hrlogin;
