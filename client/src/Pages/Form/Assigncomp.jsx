@@ -89,7 +89,7 @@ const Assigncomp = ({ number }) => {
       .map(
         (row, index) =>
           `${index + 1}. Company: ${row.companyName || "N/A"}\n   Job Title: ${row.jobTitle || "N/A"}\n  
-            Job Role: ${row.jobRole || "N/A"}\n   Job Location: ${row.jobLocation || "N/A"}\n }\n}`
+            Job Role: ${row.jobRole || "N/A"}\n   Job Location: ${row.jobLocation || "N/A"}`
       )
       .join("\n\n");
 
