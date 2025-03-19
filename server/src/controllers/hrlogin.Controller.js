@@ -1,6 +1,6 @@
 const user = {
-  username: "vr-hr",
-  password: "updatehr",
+  username: "hr",
+  password: "hr",
 };
 
 const HrControllerlogin = (req, res) => {
