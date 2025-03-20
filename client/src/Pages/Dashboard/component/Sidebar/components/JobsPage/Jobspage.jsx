@@ -31,6 +31,7 @@ import BasicModal from "../../../Model/Model";
 import { Modal, Typography } from "@mui/material";
 import CandidateModal from "../../../../../Form/AppliedCandidate";
 import { upCompany } from "../CompanyPage/Component/Updatecompany";
+import { Grid } from "@mui/system";
 // Utility function to capitalize first letter of each word
 const capitalizeWords = (str) => {
   return str
@@ -349,6 +350,7 @@ const JobsPage = () => {
   const [jobList, setJobList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+   const [showNewData, setShowNewData] = useState(true);
 
   useEffect(() => {
     async function getCompanyData() {
@@ -356,7 +358,7 @@ const JobsPage = () => {
         const response = await fetch(`${JOBHUB_BASE_URL}/v1/admins/alljobs`);
         if (!response.ok) throw new Error("Failed to fetch jobs");
         const json = await response.json();
-        setJobList(json.jobs || []);
+        setJobList(json.jobs.reverse() || []);
       } catch (error) {
         console.error(error);
         alert("Failed to load data, please try again later.");
@@ -392,13 +394,20 @@ const JobsPage = () => {
     XLSX.writeFile(workbook, "JobsData.xlsx");
   };
 
+
+  const toggleDataView = () => {
+    setShowNewData((prev) => !prev);
+  };
+
+
   const filteredJobs = useMemo(() => {
-    return jobList.filter((job) =>
-      Object.values(job).some((value) =>
+    let filteredData = jobList.filter((user) =>
+      Object.values(user).some((value) =>
         value.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-  }, [searchTerm, jobList]);
+    return showNewData ? filteredData : filteredData.slice().reverse();
+  }, [searchTerm, jobList, showNewData]);
 
   return (
     <div style={{ padding: "20px" }}>
@@ -413,6 +422,7 @@ const JobsPage = () => {
           justifyContent: "space-between",
         }}
       >
+        <Grid sx={{ display: 'flex', gap: "10px", alignItems: "center"}}>
         <TextField
           label="Search"
           variant="outlined"
@@ -421,6 +431,8 @@ const JobsPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{ width: "300px" }}
         />
+        <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
+        </Grid>
         <Box sx={{ display: "flex", gap: "10px" }}>
           <BasicModal btn={<Btn text="Add Data"/>} form={<Addjob/>}/>
           <Btn text="Download Excel" click={handleDownloadExcel} />

@@ -32,6 +32,7 @@ const CandidateData = () => {
   const [reload, setReload] = useState(false);
   useEffect(() => {
     const getUserInfo = async () => {
+      
       try {
         const response = await fetch(`${JOBHUB_BASE_URL}/candidates/getcandidates`);
         if (!response.ok) throw new Error("Failed to fetch candidates");
