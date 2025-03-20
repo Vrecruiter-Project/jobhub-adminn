@@ -26,6 +26,7 @@ import { NotFound } from "../../../../../../../utils/Error";
 import Modal from "./Component/Commodel";
 import ShowCardInfo from "../../../../../Form/FullcompanyInfo";
 import { upCompany } from "./Component/Updatecompany";
+import { Grid } from "@mui/system";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -222,6 +223,7 @@ const CompanyPage = () => {
   const [jobList, setJobList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showNewData, setShowNewData] = useState(true);
 
   useEffect(() => {
     const getCompanyData = async () => {
@@ -229,7 +231,7 @@ const CompanyPage = () => {
         const response = await fetch(`${JOBHUB_BASE_URL}/v1/admins/alljobs`);
         if (!response.ok) throw new Error("Failed to fetch jobs");
         const json = await response.json();
-        setJobList(json.jobs || []);
+        setJobList(json.jobs.reverse() || []);
       } catch (error) {
         console.error(error);
         alert("Failed to load data, please try again later.");
@@ -258,17 +260,24 @@ const CompanyPage = () => {
     XLSX.writeFile(workbook, "CompanyData.xlsx");
   };
 
+  const toggleDataView = () => {
+    setShowNewData((prev) => !prev);
+  };
+  
   const filteredJobs = useMemo(() => {
-    return jobList.filter((job) =>
-      Object.values(job).some((value) =>
+    let filteredData = jobList.filter((user) =>
+      Object.values(user).some((value) =>
         value.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-  }, [searchTerm, jobList]);
+    return showNewData ? filteredData : filteredData.slice().reverse();
+  }, [searchTerm, jobList, showNewData]);
 
+  
   return (
     <div style={{ padding: "20px" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+        <Grid sx={{display:'flex', gap:'10px', alignItems:'center' }}>
         <TextField
           label="Search"
           variant="outlined"
@@ -277,6 +286,8 @@ const CompanyPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{ width: "300px" }}
         />
+        <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
+        </Grid>
         <Box sx={{ display: "flex", gap: "10px" }}>
           <Btn text="Download Excel" click={handleDownloadExcel} />
         </Box>
