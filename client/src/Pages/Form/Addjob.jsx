@@ -310,7 +310,7 @@ const JobForm = () => {
         { label: "Salary", name: "salary", type: "number" },
         { label: "Job Location", name: "jobLocation", type: "text" },
         { label: "Age Requirement", name: "age", type: "number" },
-        { label: "Contact Number", name: "contactNumber", type: "number" },
+        { label: "Contact Number", name: "contactNumber", type: "text" },
       ].map((field) => (
         <TextField
           key={field.name}
