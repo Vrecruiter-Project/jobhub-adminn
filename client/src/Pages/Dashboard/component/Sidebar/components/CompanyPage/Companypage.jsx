@@ -60,7 +60,7 @@ const capitalizeWords = (str) => {
     .join(" ");
 };
 
-const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benefits, }) => {
+const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benefits, contactNumber }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState({
@@ -70,6 +70,7 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
     numberOfPosition: 0,
     jobLocation: "",
     benefits: "",
+    contactNumber
   });
 
   const handleRowClick = () => {
@@ -83,6 +84,7 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
       companyName,
       numberOfPosition,
       jobLocation,
+      contactNumber,
       benefits: benefits.join(", "), // Convert array to string for the TextField
     });
     setIsEditModalOpen(true); // Open the edit modal
@@ -101,6 +103,7 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
       companyName: selectedCompany.companyName,
       numberOfPosition: selectedCompany.numberOfPosition,
       jobLocation: selectedCompany.jobLocation,
+      contactNumber: selectedCompany.contactNumber,
       benefits: selectedCompany.benefits.split(", "),
     };
   
@@ -128,7 +131,7 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
         <StyledTableCell onClick={handleRowClick}>{count}</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{capitalizeWords(companyName)}</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{numberOfPosition}</StyledTableCell>
-        <StyledTableCell>Pending</StyledTableCell>
+        <StyledTableCell>{contactNumber}</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{capitalizeWords(jobLocation)}</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{benefits.map(capitalizeWords).join(", ")}</StyledTableCell>
         <StyledTableCell>
@@ -169,6 +172,15 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
             sx={{ marginBottom: "16px" }}
           />
           <TextField
+            label="Contact Number"
+            variant="outlined"
+            fullWidth
+            name="contactNumber"
+            value={selectedCompany.contactNumber}
+            onChange={handleChange}
+            sx={{ marginBottom: "16px" }}
+          />
+          <TextField
             label="Benefits"
             variant="outlined"
             fullWidth
@@ -197,12 +209,13 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
 };
 
 Company.propTypes = {
-  _id: PropTypes.string.isRequired, // Updated to string
+  _id: PropTypes.string.isRequired, 
   count: PropTypes.number.isRequired,
   companyName: PropTypes.string.isRequired,
   numberOfPosition: PropTypes.string.isRequired,
   jobLocation: PropTypes.string.isRequired,
   benefits: PropTypes.array.isRequired,
+  contactNumber: PropTypes.string.isRequired
 };
 
 const CompanyPage = () => {

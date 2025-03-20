@@ -17,6 +17,7 @@ export const upCompany = async (updatedCompany) => {
         salary: updatedCompany.salary,
         english: updatedCompany.english,
         students: updatedCompany.students,
+        contactNumber: updatedCompany.contactNumber,
         benefits: updatedCompany.benefits,
       }),
     });
