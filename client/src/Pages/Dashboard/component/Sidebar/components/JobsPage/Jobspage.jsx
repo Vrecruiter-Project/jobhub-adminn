@@ -102,6 +102,7 @@ const Job = ({
     description: "",
     interviewMode: "",
     communication: "",
+    students : ""
   });
 
   // Function to handle opening the modal
@@ -139,6 +140,7 @@ const Job = ({
       description: "", 
       interviewMode: "", 
       communication: "", 
+      students:""
     });
     setIsEditModalOpen(true);
   };
@@ -164,8 +166,8 @@ const handleSave = () => {
     experience: selectedCompany.experience,
     salary: selectedCompany.salary,
     english: selectedCompany.english,
-    students: selectedCompany.students.benefits.split(", "),
-    benefits: selectedCompany.benefits.benefits.split(", "),
+    // students: selectedCompany.students,
+    // benefits: selectedCompany.benefits.benefits.split(", "),
   };
   
     upCompany(updatedCompany)
