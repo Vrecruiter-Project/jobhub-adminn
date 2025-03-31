@@ -3,7 +3,9 @@ export const BASE_URL = "https://jobhub-adminn.onrender.com";
 //
 //
 //this uri is from the jobhub project for jobs , companies data
-export const JOBHUB_BASE_URL = "https://jobhub-project-official-1.onrender.com/api";
+// export const JOBHUB_BASE_URL = "https://jobhub-project-official-1.onrender.com/api";
+export const JOBHUB_BASE_URL = "https://jobhub-project.onrender.com/api"; //backup url
+
 //
 //
 //this is local url
