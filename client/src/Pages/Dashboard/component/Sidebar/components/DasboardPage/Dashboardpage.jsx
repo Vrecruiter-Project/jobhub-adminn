@@ -1,9 +1,9 @@
 import Details from './components/ViewDetials';
-import BarChart from '../../../Graph/Barcharts';
-//import Linechart from '../../../Graph/Linecharts';
-import DoughnutChart from '../../../Graph/DoughNutCharts';
-import LineChart from '../../../Graph/LineCharts'
-import PolarChart from '../../../Graph/PolarChart';
+// import BarChart from '../../../Graph/Barcharts';
+// //import Linechart from '../../../Graph/Linecharts';
+// import DoughnutChart from '../../../Graph/DoughNutCharts';
+// import LineChart from '../../../Graph/LineCharts'
+// import PolarChart from '../../../Graph/PolarChart';
 function DashboardPage() {
   return (
     <>
