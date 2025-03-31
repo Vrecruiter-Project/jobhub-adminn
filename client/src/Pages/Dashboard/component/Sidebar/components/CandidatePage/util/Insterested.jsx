@@ -1,13 +1,13 @@
 import { StyledTableCell, StyledTableRow } from "./StyledComponents";
 
-const Interested = ({ count,companyName,jobRole, students }) => {
+const Interested = ({ count, companyName, jobRole, students }) => {
   return (
-      <>
+    <>
       {
         students.map((student, idx) => (
           <StyledTableRow key={idx}>
             <StyledTableCell>{count}</StyledTableCell>
-                <StyledTableCell>{jobRole}</StyledTableCell>
+            <StyledTableCell>{jobRole}</StyledTableCell>
             <StyledTableCell>{companyName}</StyledTableCell>
             <StyledTableCell>
               {student.firstName} {student.lastName}
@@ -21,7 +21,7 @@ const Interested = ({ count,companyName,jobRole, students }) => {
           </StyledTableRow>
         ))
       }
-      </>
+    </>
   );
 };
 

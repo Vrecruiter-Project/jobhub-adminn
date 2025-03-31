@@ -9,7 +9,7 @@ function DashboardPage() {
     <>
       <div style={{ width: '100%', height: 'auto', padding: '20px' }}>
         <Details />
-        {/* <div style={{ display: 'flex',  marginTop:'40px'}}>
+        <div style={{ display: 'flex',  marginTop:'40px'}}>
           <div style={{ width: '50%', height: '60vh' }}>
             <BarChart />
           </div>
@@ -23,7 +23,7 @@ function DashboardPage() {
               <DoughnutChart />
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
 
     </>
