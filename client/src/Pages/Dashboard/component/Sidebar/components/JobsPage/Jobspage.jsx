@@ -29,7 +29,6 @@ import { NotFound } from "../../../../../../../utils/Error";
 import Addjob from "../../../../../Form/Addjob";
 import BasicModal from "../../../Model/Model";
 import { Modal, Typography } from "@mui/material";
-import CandidateModal from "../../../../../Form/AppliedCandidate";
 import { upCompany } from "../CompanyPage/Component/Updatecompany";
 import { Grid } from "@mui/system";
 // Utility function to capitalize first letter of each word
@@ -78,9 +77,9 @@ const Job = ({
   students,
 }) => {
   const [isEnroll, setIsEnroll] = useState(students);
-  const [openModal, setOpenModal] = useState(false); // State to control modal visibility
-  const [selectedItem, setSelectedItem] = useState(null); // State to track selected item
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State to control edit modal visibility
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [currentJobStudents, setCurrentJobStudents] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [selectedCompany, setSelectedCompany] = useState({
     _id: "",
     count: 0,
@@ -99,22 +98,21 @@ const Job = ({
     experience: "",
     gender: "",
     age: "",
+    
     description: "",
     interviewMode: "",
     communication: "",
     students : ""
   });
 
-  // Function to handle opening the modal
-  const handleOpenModal = (item) => {
-    setSelectedItem(item); 
-    setOpenModal(true); 
+  const handleOpenDialog = () => {
+    setCurrentJobStudents(isEnroll);
+    setDialogOpen(true);
   };
 
-  // Function to handle closing the modal
-  const handleCloseModal = () => {
-    setOpenModal(false); 
-    setSelectedItem(null); 
+  // Function to handle closing the dialog
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
   };
 
   // Function to handle opening the edit modal
@@ -210,30 +208,68 @@ const handleSave = () => {
           </Button>
         </StyledTableCell>
         <StyledTableCell>
-          {isEnroll.length === 0 ? (
-            "No data"
+        {isEnroll.length === 0 ? (
+            "No applicants"
           ) : (
-            isEnroll.map((item, index) => (
-              <Button
-                key={index}
-                variant="contained"
-                style={{ backgroundColor: "#4caf50", margin: "2px" }}
-                size="small"
-                onClick={() => handleOpenModal(item)} // Open modal on button click
-              >
-                See
-              </Button>
-            ))
+            <Button
+              variant="contained"
+              style={{ backgroundColor: "#4caf50" }}
+              size="small"
+              onClick={handleOpenDialog}
+            >
+              View ({isEnroll.length})
+            </Button>
           )}
         </StyledTableCell>
       </StyledTableRow>
 
-      {/* Candidate Modal */}
-      <CandidateModal
-        open={openModal}
-        onClose={handleCloseModal}
-        selectedItem={selectedItem}
-      />
+      
+      {/* Applicants Dialog */}
+      <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+        <DialogTitle>Applicants for {jobTitle}</DialogTitle>
+        <DialogContent>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>Full Name</StyledTableCell>
+                  <StyledTableCell>Phone Number</StyledTableCell>
+                  <StyledTableCell>Email</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {currentJobStudents.length > 0 ? (
+                  currentJobStudents.map((student, index) => (
+                    <StyledTableRow key={index}>
+                      <StyledTableCell>
+                        {student.firstName} {student.lastName}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {student.mobileNumber || "N/A"}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {student.email || "N/A"}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={3} align="center" sx={{ py: 2 }}>
+                      No applicants found
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} variant="contained"
+          style={{ backgroundColor: "#4caf50", marginTop: "16px" }}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Edit Company Dialog */}
       <Dialog open={isEditModalOpen} onClose={handleCloseEditModal}>
