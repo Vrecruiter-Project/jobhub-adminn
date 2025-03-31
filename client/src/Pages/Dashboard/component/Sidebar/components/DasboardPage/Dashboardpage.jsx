@@ -15,14 +15,6 @@ function DashboardPage() {
           </div>
           <div style={{ width: '50%', height: 'auto', }}>
            
-            <div style={{width:'100%' ,  height:'30vh'}}>
-              <LineChart/>
-            </div>
-            <div style={{ display:'flex', width:'50%' ,  height:'30vh'}}>
-              <PolarChart />
-              <DoughnutChart />
-            </div>
-          </div>
         </div> */}
       </div>
 
