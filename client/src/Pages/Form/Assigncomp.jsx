@@ -13,6 +13,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
+import { JOBHUB_BASE_URL } from "../../api/api";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,7 +41,7 @@ const Assigncomp = ({ number }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://jobhub-project-official-1.onrender.com/api/v1/admins/alljobs");
+        const response = await fetch(`${JOBHUB_BASE_URL}/v1/admins/alljobs`);
         const result = await response.json();
 
         if (result && Array.isArray(result.jobs)) {
