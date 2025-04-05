@@ -267,7 +267,7 @@ const CompanyPage = () => {
   const filteredJobs = useMemo(() => {
     let filteredData = jobList.filter((user) =>
       Object.values(user).some((value) =>
-        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    (value != null ? value.toString() : '').toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
     return showNewData ? filteredData : filteredData.slice().reverse();
