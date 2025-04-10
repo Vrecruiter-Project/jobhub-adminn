@@ -104,7 +104,8 @@ const Assigncomp = ({ number }) => {
   const filteredUsers = useMemo(() => {
     let filteredData = data.filter((user) =>
       Object.values(user).some((value) =>
-        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        (value != null ? value.toString() : '').toLowerCase().includes(searchTerm.toLowerCase())
+
       )
     );
     return filteredData
