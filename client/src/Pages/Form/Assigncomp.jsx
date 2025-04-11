@@ -17,7 +17,7 @@ import { JOBHUB_BASE_URL } from "../../api/api";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: "#049d41",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -113,7 +113,7 @@ const Assigncomp = ({ number }) => {
   );
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", maxWidth: "100vw" }}>
       {loading ? (
         <CircularProgress />
       ) : error ? (
@@ -121,11 +121,11 @@ const Assigncomp = ({ number }) => {
       ) : (
         <TableContainer
           component={Paper}
-          sx={{ overflowX: "auto", maxHeight: { xs: 400, md: "auto" } }}
+          sx={{ overflowX: "auto", maxHeight: "50vh", boxShadow: 3 }}
         >
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
-              <TableRow sx={{ position: 'sticky', top: 0 }}>
+              <TableRow sx={{ position: 'sticky', top: 0, }}>
                 <StyledTableCell>
                   <Checkbox
                     onChange={handleSelectAll}
@@ -176,6 +176,7 @@ const Assigncomp = ({ number }) => {
             bottom: "20px",
             zIndex: 1,
             left: { xs: "10px", md: "30px" },
+            fontSize:{xs:'10px', md:'12px'},
           }}
           variant="contained"
           color="success"
@@ -190,7 +191,7 @@ const Assigncomp = ({ number }) => {
           size="small"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{ width: "300px" }}
+          sx={{ width: { xs: "100px", sm: "150px", md: "200px" } }}
         />
       </Box>
     </div>

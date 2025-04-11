@@ -6,7 +6,7 @@ const Interested = ({ count, companyName, jobRole, students }) => {
       {
         students.map((student, idx) => (
           <StyledTableRow key={idx}>
-            <StyledTableCell>{count}</StyledTableCell>
+            {/* <StyledTableCell>{count}</StyledTableCell> */}
             <StyledTableCell>{jobRole}</StyledTableCell>
             <StyledTableCell>{companyName}</StyledTableCell>
             <StyledTableCell>

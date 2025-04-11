@@ -107,7 +107,7 @@ const CandidateData = () => {
         </Grid>
       </Grid>
 
-      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3, marginTop: "20px" }}>
+      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3, marginTop: "20px" ,maxHeight:{xs:'58vh', sm:'70vh', md:'70vh', lg:'73vh'}, overflowY:'visible' }}>
         <Table sx={{ minWidth: 700, tableLayout: "auto" }}>
           <TableHead>
             <TableRow>

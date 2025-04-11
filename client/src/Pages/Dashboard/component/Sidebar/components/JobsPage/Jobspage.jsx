@@ -467,7 +467,7 @@ const JobsPage = () => {
           size="small"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{ width: "300px" }}
+          // sx={{ width: "300px" }}
         />
         <Btn variant="contained" text={showNewData ? "Older Data" : "New Data"} click={toggleDataView} />
         </Grid>
@@ -477,7 +477,7 @@ const JobsPage = () => {
           
         </Box>
       </Box>
-      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
+      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 ,maxHeight:{xs:'58vh', sm:'70vh', md:'70vh', lg:'70vh'}, overflowY:'visible' }}>
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
