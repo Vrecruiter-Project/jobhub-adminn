@@ -128,6 +128,7 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
 
   return (
     <>
+    
       <StyledTableRow sx={{ cursor: "pointer" }}>
         <StyledTableCell onClick={handleRowClick}>{count}</StyledTableCell>
         <StyledTableCell onClick={handleRowClick}>{capitalizeWords(companyName)}</StyledTableCell>
@@ -140,7 +141,7 @@ const Company = ({ _id, count, companyName, numberOfPosition, jobLocation, benef
             onClick={handleEditClick}>Edit</Button>
         </StyledTableCell>
       </StyledTableRow>
-
+      
       {/* Edit Company Dialog */}
       <Dialog open={isEditModalOpen} onClose={handleCloseEditModal}>
         <DialogTitle sx={{ fontSize: "30px" }}>Edit Company</DialogTitle>
@@ -292,8 +293,8 @@ const CompanyPage = () => {
           <Btn text="Download Excel" click={handleDownloadExcel} />
         </Box>
       </Box>
-      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
-        <Table sx={{ minWidth: 700 }}>
+      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 , maxHeight:{xs:'65vh', sm:'70vh', md:'70vh', lg:'75vh'}, overflowY:'visible'}}>
+        <Table sx={{ minWidth: 700 , }} stickyHeader aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>S_No</StyledTableCell>

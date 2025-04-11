@@ -23,12 +23,12 @@ const InterestedCandidate = () => {
     }, []);
 
     return (
-        <div>
-            <TableContainer component={Paper} sx={{ boxShadow: 3 }}>
+        <div className="p-2">
+            <TableContainer component={Paper} sx={{ boxShadow: 3,maxHeight:{xs:'80vh', sm:'70vh', md:'70vh', lg:'73vh'}, overflowY:'visible'  }}>
                 <Table sx={{ minWidth: 700 }}>
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell>S_No</StyledTableCell>
+                            {/* <StyledTableCell>S_No</StyledTableCell> */}
                             <StyledTableCell>Position</StyledTableCell>
                             <StyledTableCell>Company</StyledTableCell>
                             <StyledTableCell>Name</StyledTableCell>
@@ -53,7 +53,7 @@ const InterestedCandidate = () => {
                                         companyName={item.companyName}
                                         jobRole={item.jobRole}
                                         students={item.students}
-                                        count={index + 1}
+                                        // count={index}
                                     />
                                 ))}
                     </TableBody>
