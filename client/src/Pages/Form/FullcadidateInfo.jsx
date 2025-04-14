@@ -67,7 +67,13 @@ export default function ShowCandidateInfo({canID}) {
     useEffect(() => {
         async function getCandidateFullInfo() {
             try {
-                const response = await fetch(`${JOBHUB_BASE_URL}/candidates/getcandidates`);
+                const response = await fetch(`${JOBHUB_BASE_URL}/candidates/getcandidates`,{
+                    method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": import.meta.env.VITE_API_SECRET_KEY,
+          },
+                });
                 if (!response.ok) throw new Error("Failed to fetch candidates");
                 const data = await response.json();
                 setCandidateCard(data);

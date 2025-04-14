@@ -16,8 +16,12 @@ const registerCandidate = async (formData) => {
     const response = await axios.post(
       `${JOBHUB_BASE_URL}/candidates/registercandidate`,
       formData,
+
       {
-        headers: { "Content-Type": "application/json" },
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json", "x-api-key": import.meta.env.VITE_API_SECRET_KEY,
+        },
       }
     );
     return response.data;
@@ -27,7 +31,7 @@ const registerCandidate = async (formData) => {
 };
 
 const RegistrationPage = () => {
-  const theme = useTheme(); 
+  const theme = useTheme();
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
