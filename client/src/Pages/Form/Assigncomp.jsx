@@ -41,7 +41,13 @@ const Assigncomp = ({ number }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${JOBHUB_BASE_URL}/v1/admins/alljobs`);
+        const response = await fetch(`${JOBHUB_BASE_URL}/v1/admins/alljobs`,{
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": import.meta.env.VITE_API_SECRET_KEY,
+          },
+        });
         const result = await response.json();
 
         if (result && Array.isArray(result.jobs)) {

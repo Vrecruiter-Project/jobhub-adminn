@@ -8,7 +8,13 @@ const useFetchCounts = () => {
     useEffect(() => {
         const getCompanyNum = async () => {
             try {
-                const response = await fetch(`${JOBHUB_BASE_URL}/v1/admins/alljobs`);
+                const response = await fetch(`${JOBHUB_BASE_URL}/v1/admins/alljobs`,{
+                    method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": import.meta.env.VITE_API_SECRET_KEY,
+          },
+                });
                 if (!response.ok) throw new Error("Failed to fetch jobs");
                 const json = await response.json();
                 setNumCompany(json.jobs || []);
@@ -20,7 +26,13 @@ const useFetchCounts = () => {
 
         const getUserNum = async () => {
             try {
-                const response = await fetch(`${JOBHUB_BASE_URL}/candidates/getcandidates`);
+                const response = await fetch(`${JOBHUB_BASE_URL}/candidates/getcandidates`,{
+                    method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": import.meta.env.VITE_API_SECRET_KEY,
+          },
+                });
                 if (!response.ok) throw new Error("Failed to fetch candidates");
                 const data = await response.json();
                 setNumCandidate(data.reverse());

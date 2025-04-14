@@ -5,6 +5,8 @@ export const upCompany = async (updatedCompany) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "x-api-key": import.meta.env.VITE_API_SECRET_KEY,
+
       },
       body: JSON.stringify({
         jobId: updatedCompany._id,

@@ -7,6 +7,8 @@ export const updateCandidate = async (updatedUser) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "x-api-key": import.meta.env.VITE_API_SECRET_KEY,
+
             },
             body: JSON.stringify(updatedUser),
         });
