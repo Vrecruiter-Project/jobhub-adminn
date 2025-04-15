@@ -13,7 +13,12 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://jobhubadmin.vercel.app", "http://localhost:5173"], // Removed trailing slash
+    origin: [
+      "https://jobhubadmin.vercel.app",
+      "http://localhost:5173",
+      "https://admin.jobhub.world",
+      "https://www.admin.jobhub.world",
+    ],
     credentials: true,
   })
 );
