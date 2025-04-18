@@ -8,7 +8,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import HailIcon from '@mui/icons-material/Hail';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDemoRouter } from '@toolpad/core/internal';
-import Logo from '/logo.png';
+import Logo from '/Jobhub_logo.png';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { BASE_URL } from '../../../../api/api';
 // Import Demo Pages
@@ -162,8 +162,8 @@ function AppProviderBasic() {
       router={router}
       theme={demoTheme}
       branding={{
-        title: <div className='text-green-400'>JOB HUB <sup className='text-green-300' style={{fontSize:'10px'}}>admin</sup></div>,
-        logo: <img className='w-10' src={Logo} alt="job-hub" />,
+        title: <div className='text-green-400'><sup className='text-green-300' style={{fontSize:'10px'}}>admin</sup></div>,
+        logo: <img className='w-20 py-2' src={Logo} alt="job-hub" />,
       }}
     >
       <DashboardLayout>
