@@ -35,7 +35,7 @@ const RegistrationPage = () => {
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
-    position: "",
+    jobprofile: "",
     dob: "",
     number: "",
     qualification: "",
@@ -98,7 +98,7 @@ const RegistrationPage = () => {
         </Typography>
 
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-          {["fullname", "email", "Job Profile", "dob", "number", "qualification", "address"].map((field) => (
+          {["fullname", "email", "jobprofile", "dob", "number", "qualification", "address"].map((field) => (
             <Box sx={{ mb: 3 }} key={field}>
               <TextField
                 fullWidth
