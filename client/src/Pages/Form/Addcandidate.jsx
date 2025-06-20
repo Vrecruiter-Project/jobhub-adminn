@@ -98,7 +98,7 @@ const RegistrationPage = () => {
         </Typography>
 
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-          {["fullname", "email", "position", "dob", "number", "qualification", "address"].map((field) => (
+          {["fullname", "email", "Job Profile", "dob", "number", "qualification", "address"].map((field) => (
             <Box sx={{ mb: 3 }} key={field}>
               <TextField
                 fullWidth
