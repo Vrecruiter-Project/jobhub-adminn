@@ -120,7 +120,7 @@ const CandidateData = () => {
               <StyledTableCell>S_No</StyledTableCell>
               <StyledTableCell>Full Name</StyledTableCell>
               <StyledTableCell>Email</StyledTableCell>
-              <StyledTableCell>Position</StyledTableCell>
+              <StyledTableCell>Job Profile</StyledTableCell>
               <StyledTableCell>DOB</StyledTableCell>
               <StyledTableCell>Phone Number</StyledTableCell>
               <StyledTableCell>Gender</StyledTableCell>
