@@ -1,10 +1,10 @@
 //this is our base url for the api requests
-export const BASE_URL = "https://jobhub-adminn.onrender.com";
+export const BASE_URL = "https://employer.jobhub.world";
 //
 //
 //this uri is from the jobhub project for jobs , companies data
 // export const JOBHUB_BASE_URL = "https://jobhub-project-official-1.onrender.com/api";
-export const JOBHUB_BASE_URL = "https://jobhub-ttfi.onrender.com/api"; //backup url
+export const JOBHUB_BASE_URL = "https://employer.jobhub.world/api"; //backup url
 
 //
 //
