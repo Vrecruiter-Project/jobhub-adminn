@@ -6,7 +6,7 @@ const router = express.Router();
 
 //login route
 router.post("/login", adminLogin);
-router.get("/dashboard", protect, (req, res) => {
+router.get("/dashboard", (req, res) => {
   res.json({ message: "Welcome to the Admin Dashboard!" });
 });
 
